@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.project_idfind"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="19" />
+    
+    <uses-feature android:name="android.hardware.bluetooth_ie" android:required="true"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.example.sample.RECOMonitoringActivity" />
+        <activity android:name="com.example.sample.RECORangingActivity" />            
+        
+        <service android:name="com.example.sample.RECOBackgroundMonitoringService" />
+        <service android:name="com.example.sample.RECOBackgroundRangingService"/>
+        
+        <service android:name="com.perples.recosdk.RECOBeaconService" />
+        
+        <activity android:name="MenuActivity"></activity>
+        <activity android:name="JoinActivity"></activity>
+        <activity android:name="FindActivity"></activity>
+        <activity android:name="IDFindActivity"></activity>
+        <activity android:name="InfoModify"></activity>
+        <activity android:name="CardModify"></activity>
+        <activity android:name="DeveloperInfo"></activity>
+        <activity android:name="GuidePage"></activity>
+        <activity android:name="Notice"></activity>
+        <activity android:name="MonthUse"></activity>
+        <activity android:name="PayUse"></activity>
+        <activity android:name="RecentUse"></activity>
+    </application>
+
+</manifest>
