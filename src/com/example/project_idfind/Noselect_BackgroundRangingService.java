@@ -30,10 +30,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-<<<<<<< HEAD
 import android.widget.Toast;
-=======
->>>>>>> 7f9d7ec7abefdcb7a4bf4e85374f658cb5b7f617
 
 import com.perples.recosdk.RECOBeacon;
 import com.perples.recosdk.RECOBeaconManager;
@@ -48,7 +45,6 @@ public class Noselect_BackgroundRangingService extends Service implements RECOMo
 	StringBuilder builder;
 	String result;
 	
-<<<<<<< HEAD
 	GpsInfo gps;
 	
 	String lati; //위도
@@ -56,8 +52,6 @@ public class Noselect_BackgroundRangingService extends Service implements RECOMo
 	
 	String now_time;
 	
-=======
->>>>>>> 7f9d7ec7abefdcb7a4bf4e85374f658cb5b7f617
 	private long mScanDuration = (1/2)*1000L;
 	private long mSleepDuration = (1/4)*1000L;
 	private long mRegionExpirationTime = 3*1000L;
@@ -243,7 +237,6 @@ public class Noselect_BackgroundRangingService extends Service implements RECOMo
 						count++;
 						if(count==1){
 							major = String.valueOf(mRangingAdapter.mRangedBeacons.get(i).getMajor());
-<<<<<<< HEAD
 							
 							// GPS 사용유무 가져오기
 			                if (gps.isGetLocation()) {
@@ -268,8 +261,6 @@ public class Noselect_BackgroundRangingService extends Service implements RECOMo
 							//아이디, 메이져값, 위도, 경도, 현재시간
 							
 							HttpPostData();
-=======
->>>>>>> 7f9d7ec7abefdcb7a4bf4e85374f658cb5b7f617
 						}
 					}
 				}
@@ -324,12 +315,8 @@ public class Noselect_BackgroundRangingService extends Service implements RECOMo
 						
 			//buffer:php로 보낼 구문
 			StringBuffer buffer = new StringBuffer();
-<<<<<<< HEAD
 			buffer.append("major=" + major+"&mem_id="+MenuActivity.memInfoArray[3]+"&lati="+lati+"&longi="+longi
 					+"&now_time="+now_time);
-=======
-			buffer.append("major=" + major );
->>>>>>> 7f9d7ec7abefdcb7a4bf4e85374f658cb5b7f617
 			//php로 보내기
 			PrintWriter writer = new PrintWriter(new OutputStreamWriter(connection.getOutputStream(),"EUC-KR"));
 			writer.write(buffer.toString()); 

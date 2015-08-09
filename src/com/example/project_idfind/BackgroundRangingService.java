@@ -12,10 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-<<<<<<< HEAD
-=======
-import java.util.Locale;
->>>>>>> 7f9d7ec7abefdcb7a4bf4e85374f658cb5b7f617
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -24,26 +20,14 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-<<<<<<< HEAD
 import android.app.AlertDialog;
-=======
-import android.R.string;
-import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
->>>>>>> 7f9d7ec7abefdcb7a4bf4e85374f658cb5b7f617
 import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
-<<<<<<< HEAD
 import android.util.Log;
 import android.widget.Toast;
-=======
-import android.support.v4.app.NotificationCompat;
-import android.util.Log;
->>>>>>> 7f9d7ec7abefdcb7a4bf4e85374f658cb5b7f617
 
 import com.perples.recosdk.RECOBeacon;
 import com.perples.recosdk.RECOBeaconManager;
@@ -58,12 +42,9 @@ public class BackgroundRangingService extends Service implements
 		RECOMonitoringListener, RECORangingListener, RECOServiceConnectListener {
 	StringBuilder builder;
 	String result;
-<<<<<<< HEAD
 	GpsInfo gps;
 	
 	String now_time;
-=======
->>>>>>> 7f9d7ec7abefdcb7a4bf4e85374f658cb5b7f617
 
 	private long mScanDuration = (1 / 2) * 1000L;
 	private long mSleepDuration = (1 / 4) * 1000L;
@@ -72,14 +53,10 @@ public class BackgroundRangingService extends Service implements
 	private RECOBeaconManager mRecoManager;
 	private ArrayList<RECOBeaconRegion> mRegions;
 	private RangingListAdapter mRangingAdapter;
-<<<<<<< HEAD
 	
 	String lati;
 	String longi;
 	
-=======
-
->>>>>>> 7f9d7ec7abefdcb7a4bf4e85374f658cb5b7f617
 	int count = 0;
 	String major;
 
@@ -289,7 +266,6 @@ public class BackgroundRangingService extends Service implements
 				if (count == 1) {
 					major = String.valueOf(mRangingAdapter.mRangedBeacons.get(i).getMajor());
 					
-<<<<<<< HEAD
 					 // GPS 사용유무 가져오기
 	                if (gps.isGetLocation()) {
 	 
@@ -313,12 +289,6 @@ public class BackgroundRangingService extends Service implements
 					//아이디, 메이져값, 위도, 경도, 현재시간
 					
 					HttpPostData();
-=======
-					//아이디, 메이져값, 
-					HttpPostData();
-					
-					
->>>>>>> 7f9d7ec7abefdcb7a4bf4e85374f658cb5b7f617
 					
 					new AlertDialog.Builder(this)
 							.setTitle("크기가 -70db 보다 큰 Beacon의 정보")
@@ -332,10 +302,7 @@ public class BackgroundRangingService extends Service implements
 										}
 							}).show(); // 팝업창 보여줌
 				}
-<<<<<<< HEAD
 				
-=======
->>>>>>> 7f9d7ec7abefdcb7a4bf4e85374f658cb5b7f617
 			}
 		}
 	}
@@ -415,12 +382,8 @@ public class BackgroundRangingService extends Service implements
 
 			// buffer:php로 보낼 구문
 			StringBuffer buffer = new StringBuffer();
-<<<<<<< HEAD
 			buffer.append("major=" + major+"&mem_id="+MenuActivity.memInfoArray[3]+"&lati="+lati+"&longi="+longi
 					+"&now_time="+now_time);
-=======
-			buffer.append("major=" + major+"&mem_id="+MenuActivity.memInfoArray[3]);
->>>>>>> 7f9d7ec7abefdcb7a4bf4e85374f658cb5b7f617
 			// php로 보내기
 			PrintWriter writer = new PrintWriter(new OutputStreamWriter(
 					connection.getOutputStream(), "EUC-KR"));

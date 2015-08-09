@@ -69,11 +69,8 @@ public class MenuActivity extends Activity {
         
         // preparing list data
         prepareListData();
-<<<<<<< HEAD
         
         //php를 걸쳐서 미결제 금액도 표시해줘야함
-=======
->>>>>>> 7f9d7ec7abefdcb7a4bf4e85374f658cb5b7f617
  
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
  
