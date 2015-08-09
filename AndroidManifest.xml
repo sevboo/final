@@ -13,7 +13,10 @@
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     
     <uses-permission android:name="android.permission.INTERNET" />
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+=======
+>>>>>>> 7f9d7ec7abefdcb7a4bf4e85374f658cb5b7f617
 
     <application
         android:allowBackup="true"

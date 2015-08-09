@@ -44,7 +44,10 @@ public class MainActivity extends ActionBarActivity {
 	Intent intent;
 	StringBuilder builder;
 	String result;
+<<<<<<< HEAD
 	GpsInfo gps;
+=======
+>>>>>>> 7f9d7ec7abefdcb7a4bf4e85374f658cb5b7f617
 	
 	public static String RECO_UUID = "24DDF411-8CF1-440C-87CD-E368DAF9C93E";
 	public static final boolean SCAN_RECO_ONLY = true;
@@ -62,15 +65,22 @@ public class MainActivity extends ActionBarActivity {
         mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
 		mBluetoothAdapter = mBluetoothManager.getAdapter();
 		
+<<<<<<< HEAD
 		if(mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {  //블루투스 안켜져있을때
+=======
+		if(mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+>>>>>>> 7f9d7ec7abefdcb7a4bf4e85374f658cb5b7f617
 			Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 			startActivityForResult(enableBTIntent, REQUEST_ENABLE_BT);
 		}
 		
+<<<<<<< HEAD
 		if(gps.isGetLocation()== false){ // GPS 안켜져있을때
 			gps.showSettingsAlert();
 		}
 		
+=======
+>>>>>>> 7f9d7ec7abefdcb7a4bf4e85374f658cb5b7f617
         ID = (EditText) findViewById(R.id.inID);
 		Password = (EditText) findViewById(R.id.inPW);
 		btnLogin = (Button) findViewById(R.id.btnLogin);
@@ -229,7 +239,11 @@ public class MainActivity extends ActionBarActivity {
     
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+<<<<<<< HEAD
 		if (requestCode == REQUEST_ENABLE_BT && resultCode == Activity.RESULT_CANCELED || gps.isGetLocation == false) {
+=======
+		if (requestCode == REQUEST_ENABLE_BT && resultCode == Activity.RESULT_CANCELED) {
+>>>>>>> 7f9d7ec7abefdcb7a4bf4e85374f658cb5b7f617
 			//If the request to turn on bluetooth is denied, the app will be finished.
 			//사용자가 블루투스 요청을 허용하지 않았을 경우, 어플리케이션은 종료됩니다.
 			finish();
