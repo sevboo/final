@@ -28,12 +28,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name="com.example.sample.RECOMonitoringActivity" />
-        <activity android:name="com.example.sample.RECORangingActivity" />            
+        </activity>         
         
-        <service android:name="com.example.sample.RECOBackgroundMonitoringService" />
-        <service android:name="com.example.sample.RECOBackgroundRangingService"/>
+        <service android:name="com.example.project_idfind.BackgroundMonitoringService" />
+        <service android:name="com.example.project_idfind.BackgroundRangingService"/>
         
         <service android:name="com.perples.recosdk.RECOBeaconService" />
         
@@ -49,6 +47,7 @@
         <activity android:name="MonthUse"></activity>
         <activity android:name="PayUse"></activity>
         <activity android:name="RecentUse"></activity>
+        <activity android:name="RangingActivity" />
     </application>
 
 </manifest>

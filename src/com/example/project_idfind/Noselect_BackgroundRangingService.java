@@ -292,7 +292,7 @@ public class Noselect_BackgroundRangingService extends Service implements RECOMo
 	}
 	public void HttpPostData(){
 		try{
-			URL url = new URL("https://cic.hongik.ac.kr/b289076/beaconInfo.php");//php 파일 수정 필요
+			URL url = new URL("https://cic.hongik.ac.kr/b289076/popupImport.php");//php 파일 수정 필요
 						
 			trustAllHosts(); //ssl socket 적용
 

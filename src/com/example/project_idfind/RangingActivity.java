@@ -23,7 +23,7 @@ public class RangingActivity extends RecoActivity implements RECORangingListener
 		@Override
 	protected void onCreate(Bundle savedInstanceState) {		
 		super.onCreate(savedInstanceState);
-
+		setContentView(R.layout.ranging_list);
 		//RECORangingListener 를 설정합니다. (필수)
 		mRecoManager.setRangingListener(this);
 		mRecoManager.setScanPeriod(500);
@@ -33,6 +33,9 @@ public class RangingActivity extends RecoActivity implements RECORangingListener
 	@Override
 	protected void onResume() {
 		super.onResume();		
+		mRangingListAdapter = new RangingListAdapter(this);
+		mRegionListView = (ListView)findViewById(R.id.ranging_list);
+		mRegionListView.setAdapter(mRangingListAdapter);
 	}
 		@Override
 	protected void onDestroy() {

@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -21,11 +22,13 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -42,7 +45,7 @@ public class BackgroundRangingService extends Service implements
 		RECOMonitoringListener, RECORangingListener, RECOServiceConnectListener {
 	StringBuilder builder;
 	String result;
-	GpsInfo gps;
+	GpsInfo gps=new GpsInfo(BackgroundRangingService.this);
 	
 	String now_time;
 
@@ -71,13 +74,18 @@ public class BackgroundRangingService extends Service implements
 		Log.i("RECOBackgroundRangingService", "onStartCommand");
 		mRecoManager = RECOBeaconManager.getInstance(getApplicationContext(),
 				MainActivity.SCAN_RECO_ONLY, false);
+		
+		lati = intent.getExtras().getString("lati");
+		longi = intent.getExtras().getString("longi");
+		Log.i("RECOBackgroundRangingService", "1111lati"+lati+", longi"+longi);
 		this.bindRECOService();
-		return START_STICKY;
+		return START_NOT_STICKY;
 	}
 
 	@Override
 	public void onDestroy() {
 		Log.i("RECOBackgroundRangingService", "onDestroy()");
+		count=0;
 		this.tearDown();
 		super.onDestroy();
 	}
@@ -258,71 +266,65 @@ public class BackgroundRangingService extends Service implements
 		Log.i("RECOBackgroundRangingService",
 				"didRangeBeaconsInRegion() major- "
 						+ mRangingAdapter.mRangedBeacons.get(0).getMajor());
-
+		/*
+		if(mRangingAdapter.mRangedBeacons.get(0).getRssi()>=-60){
+			this.popupNotification("-60db이상 정보 ","major : "+mRangingAdapter.mRangedBeacons.get(0).getMajor()+
+				"\n rssi : "+mRangingAdapter.mRangedBeacons.get(0).getRssi());
+		}
+		*/
 		// rssi 크기가 -70db 보다 큰 beacon의 정보를 팝업으로 띄우기(최초 1번만)
 		for (int i = 0; i < mRangingAdapter.mRangedBeacons.size(); i++) {
 			if (mRangingAdapter.mRangedBeacons.get(i).getRssi() >= -70) {
 				count++;
 				if (count == 1) {
 					major = String.valueOf(mRangingAdapter.mRangedBeacons.get(i).getMajor());
-					
-					 // GPS 사용유무 가져오기
-	                if (gps.isGetLocation()) {
-	 
-	                    double latitude = gps.getLatitude();
-	                    double longitude = gps.getLongitude();
-	                     
-	                    lati = String.valueOf(latitude); //위도
-	                    longi = String.valueOf(longitude); //경도
-	                     
-	                    Toast.makeText(
-	                            getApplicationContext(),
-	                            "당신의 위치 - \n위도: " + latitude + "\n경도: " + longitude,
-	                            Toast.LENGTH_LONG).show();
-	                } else {
-	                    // GPS 를 사용할수 없으므로
-	                    gps.showSettingsAlert();
-	                }
-	                
+
 	                now_time = new SimpleDateFormat("yyyyMMdd HHmmss").format(new Date(System.currentTimeMillis()));
 					
 					//아이디, 메이져값, 위도, 경도, 현재시간
 					
+	                
 					HttpPostData();
-					
+					this.popupNotification("-60db이상 정보 ","major : "+mRangingAdapter.mRangedBeacons.get(0).getMajor()+
+							"\n rssi : "+mRangingAdapter.mRangedBeacons.get(0).getRssi());
+					count = 100;
+					/*
 					new AlertDialog.Builder(this)
-							.setTitle("크기가 -70db 보다 큰 Beacon의 정보")
-							// 팝업창 타이틀바
-							.setMessage(
-									"major : "+ mRangingAdapter.mRangedBeacons.get(i).getMajor()
-									+ "\nrssi : "+ mRangingAdapter.mRangedBeacons.get(i).getRssi()) // 팝업창 내용
-							.setNeutralButton("닫기",new DialogInterface.OnClickListener() {
-										public void onClick(DialogInterface dlg, int sumthin) {
-											// 닫기 버튼을 누르면 아무것도 안하고 닫기 때문에 그냥 비움
-										}
-							}).show(); // 팝업창 보여줌
+					.setTitle("크기가 -70db 보다 큰 Beacon의 정보")
+					// x팝업창 타이틀바
+					.setMessage(
+							"major : "+ mRangingAdapter.mRangedBeacons.get(i).getMajor()
+							+ "\nrssi : "+ mRangingAdapter.mRangedBeacons.get(i).getRssi()) // 팝업창 내용
+					.setNeutralButton("닫기",new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dlg, int sumthin) {
+									// 닫기 버튼을 누르면 아무것도 안하고 닫기 때문에 그냥 비움
+								}
+					}).show(); // 팝업창 보여줌
+	                */
+				}
+				else{
+					stopRangingWithRegion(region);
 				}
 				
 			}
 		}
 	}
 
-	/*
-	 * private void popupNotification(String title,String msg) {
-	 * Log.i("RECOBackgroundRangingService", "popupNotification()"); String
-	 * currentTime = new SimpleDateFormat("HH:mm:ss", Locale.KOREA).format(new
-	 * Date()); long[] vibrate = {0, 100, 200, 300}; NotificationManager nm =
-	 * (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-	 * NotificationCompat.Builder builder = new
-	 * NotificationCompat.Builder(this).setSmallIcon(R.drawable.ic_launcher)
-	 * .setContentTitle(title) .setContentText(msg);
-	 * NotificationCompat.InboxStyle inboxStyle = new
-	 * NotificationCompat.InboxStyle(); builder.setStyle(inboxStyle);
-	 * builder.setVibrate(vibrate);
-	 * //builder.setSound(file://sdcard/notification/ringer.mp3);
-	 * nm.notify(mNotificationID, builder.build()); mNotificationID =
-	 * (mNotificationID - 1) % 1000 + 9000; }
-	 */
+	private void popupNotification(String title,String msg) {
+		Log.i("RECOBackgroundRangingService", "popupNotification()");
+		String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.KOREA).format(new Date());
+		long[] vibrate = {0, 100, 200, 300}; 
+		NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setSmallIcon(R.drawable.ic_launcher)
+																				.setContentTitle(title)
+																				.setContentText(msg);
+		NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+		builder.setStyle(inboxStyle);
+		builder.setVibrate(vibrate);
+		//builder.setSound(file://sdcard/notification/ringer.mp3);
+		nm.notify(mNotificationID, builder.build());
+		mNotificationID = (mNotificationID - 1) % 1000 + 9000;
+	}
 	@Override
 	public IBinder onBind(Intent intent) {
 		// This method is not used
@@ -355,8 +357,9 @@ public class BackgroundRangingService extends Service implements
 	}
 
 	public void HttpPostData() {
+		Log.i("RECOBackgroundRangingService", "httppostdata");
 		try {
-			URL url = new URL("https://cic.hongik.ac.kr/b289076/exportPopup.php");// php 파일수정 필요
+			URL url = new URL("https://cic.hongik.ac.kr/b289076/popupImport.php");// php 파일수정 필요
 																					
 
 			trustAllHosts(); // ssl socket 적용
@@ -382,7 +385,9 @@ public class BackgroundRangingService extends Service implements
 
 			// buffer:php로 보낼 구문
 			StringBuffer buffer = new StringBuffer();
-			buffer.append("major=" + major+"&mem_id="+MenuActivity.memInfoArray[3]+"&lati="+lati+"&longi="+longi
+			buffer.append("major=" + major+"&mem_id="+MenuActivity.memInfoArray[0]+"&lati="+lati+"&longi="+longi
+					+"&now_time="+now_time);
+			Log.i("HttpPost","major=" + major+"&mem_id="+MenuActivity.memInfoArray[0]+"&lati="+lati+"&longi="+longi
 					+"&now_time="+now_time);
 			// php로 보내기
 			PrintWriter writer = new PrintWriter(new OutputStreamWriter(
@@ -397,7 +402,7 @@ public class BackgroundRangingService extends Service implements
 			builder.append(reader.readLine());
 
 			result = builder.toString();
-
+			Log.i("HttpPost","php:"+result);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

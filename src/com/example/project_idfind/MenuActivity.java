@@ -47,6 +47,10 @@ public class MenuActivity extends Activity {
     
     Switch switch1;
   
+    GpsInfo gps;
+    String lati;
+	String longi;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +70,24 @@ public class MenuActivity extends Activity {
 		memInfoArray[4] = getintent.getExtras().getString("checked_mem_phone");
  
         textCustomId.setText("회원번호   "+memInfoArray[0]);
+        gps = new GpsInfo(MenuActivity.this);
+        // GPS 사용유무 가져오기
+        if (gps.isGetLocation()) {
+
+            double latitude = gps.getLatitude();
+            double longitude = gps.getLongitude();
+             
+            lati = String.valueOf(latitude); //위도
+            longi = String.valueOf(longitude); //경도
+             
+            Toast.makeText(
+                    getApplicationContext(),
+                    "당신의 위치 - \n위도: " + latitude + "\n경도: " + longitude,
+                    Toast.LENGTH_LONG).show();
+        } else {
+            // GPS 를 사용할수 없으므로
+            gps.showSettingsAlert();
+        }
         
         // preparing list data
         prepareListData();
@@ -169,11 +191,17 @@ public class MenuActivity extends Activity {
 		super.onResume();
 	    
 		if(this.isBackgroundRangingServiceRunning(this)) {
-			switch1 = (Switch)findViewById(R.id.switch1);
-			switch1.setChecked(true);
+			ToggleButton toggle = (ToggleButton)findViewById(R.id.background_toggle);
+			toggle.setChecked(true);
 		}
 	}
-
+    
+    @Override
+	protected void onDestroy() {
+		Log.i("MainActivity", "onDestroy");
+		super.onDestroy();
+	}
+    
     /*
      * Preparing the list data
      */
@@ -213,13 +241,25 @@ public class MenuActivity extends Activity {
     public void onRangingToggleButtonClicked(View v) {
 		ToggleButton toggle = (ToggleButton)v;
 		if(toggle.isChecked()) {
-			Log.i("MainActivity", "onRangingToggleButtonClicked off to on");
+			Log.i("MenuActivity", "onRangingToggleButtonClicked off to on");
 			Intent intent = new Intent(this, BackgroundRangingService.class);
+			
+			intent.putExtra("lati", lati);
+			intent.putExtra("longi", longi);
+			Log.i("MenuActivity", "lati"+lati+", longi"+longi);
 			startService(intent);
+			//stopService(new Intent(this, Noselect_BackgroundRangingService.class));
 		} else {
-			Log.i("MainActivity", "onRangingToggleButtonClicked on to off");
+			Log.i("MenuActivity", "onRangingToggleButtonClicked on to off");
 			stopService(new Intent(this, BackgroundRangingService.class));
-			startService(new Intent(this,Noselect_BackgroundRangingService.class));
+			//startService(new Intent(this,Noselect_BackgroundRangingService.class));
+		}
+	}
+    public void onButtonClicked(View v) {
+		Button btn = (Button)v;
+		if(btn.getId() == R.id.rangingButton) {
+			final Intent intent = new Intent(this, RangingActivity.class);
+			startActivity(intent);
 		}
 	}
     private boolean isBackgroundRangingServiceRunning(Context context) {

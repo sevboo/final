@@ -67,9 +67,7 @@ public class MainActivity extends ActionBarActivity {
 			startActivityForResult(enableBTIntent, REQUEST_ENABLE_BT);
 		}
 		
-		if(gps.isGetLocation()== false){ // GPS 안켜져있을때
-			gps.showSettingsAlert();
-		}
+		
 		
         ID = (EditText) findViewById(R.id.inID);
 		Password = (EditText) findViewById(R.id.inPW);

@@ -34,42 +34,40 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:padding="20dp" >
+
+        <ToggleButton
+            android:id="@+id/background_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:onClick="onRangingToggleButtonClicked"
+            android:text="승/하차 팝업 서비스" />
 
         <TextView
             android:id="@+id/textCustomId"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
             android:background="#ffffcc"
-            android:text="" />
+            android:textSize="15dp" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
             android:background="#ffe3b5"
-            android:text="미결제 누적금액" />
+            android:text="미결제 누적금액"
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/textSumCharge"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
             android:background="#ffe3b5"
             android:gravity="center"
-            android:text="10000원" />
-
-        <Switch
-            android:id="@+id/switch1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="right"
-            android:text="승/하차 팝업 서비스" />
-
+            android:text="10000원"
+            android:textSize="20dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -78,9 +76,17 @@
         android:orientation="vertical" >
         
         <ExpandableListView
-                android:id="@+id/lvExp"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"/>   
+            android:id="@+id/lvExp"
+            android:layout_width="match_parent"
+            android:layout_height="161dp" />
+   
     </LinearLayout>
+
+    <Button
+        android:id="@+id/rangingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onButtonClicked"
+        android:text="start_ranging" />
 
 </LinearLayout>
