@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
+import java.util.StringTokenizer;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -21,16 +22,13 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.Service;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.perples.recosdk.RECOBeacon;
 import com.perples.recosdk.RECOBeaconManager;
@@ -45,6 +43,7 @@ public class BackgroundRangingService extends Service implements
 		RECOMonitoringListener, RECORangingListener, RECOServiceConnectListener {
 	StringBuilder builder;
 	String result;
+	String [] result_arr = new String[4];
 	GpsInfo gps=new GpsInfo(BackgroundRangingService.this);
 	
 	String now_time;
@@ -62,6 +61,9 @@ public class BackgroundRangingService extends Service implements
 	
 	int count = 0;
 	String major;
+	
+	ArrayList<String> result_array = new ArrayList<String>();;
+	String[][] recentInfo = new String[50][50];
 
 	@Override
 	public void onCreate() {
@@ -285,9 +287,24 @@ public class BackgroundRangingService extends Service implements
 					
 	                
 					HttpPostData();
+					
+					StringTokenizer tokened = new StringTokenizer(result,",");
+					int numberOfToken = tokened.countTokens();
+					
+					for(int j=0;j<numberOfToken;j++){
+						result_arr[j]=tokened.nextToken();
+					}
+					
+					if(Integer.parseInt(result_arr[2])==0){
+						this.popupNotification("하차 정보",result_arr[0]+"\n"+result_arr[1]+"\n"+result_arr[3]);
+					}else if (Integer.parseInt(result_arr[2])==1){
+						this.popupNotification("승차 정보",result_arr[0]+"\n"+result_arr[1]+"\n"+result_arr[3]);
+					}else{
+						this.popupNotification("환승 정보",result_arr[0]+"\n"+result_arr[1]+"\n"+result_arr[3]);
+					}
 					this.popupNotification("-60db이상 정보 ","major : "+mRangingAdapter.mRangedBeacons.get(0).getMajor()+
 							"\n rssi : "+mRangingAdapter.mRangedBeacons.get(0).getRssi());
-					count = 100;
+					//count = 100;
 					/*
 					new AlertDialog.Builder(this)
 					.setTitle("크기가 -70db 보다 큰 Beacon의 정보")
@@ -400,7 +417,7 @@ public class BackgroundRangingService extends Service implements
 					connection.getInputStream(), "EUC-KR"));
 			builder = new StringBuilder();
 			builder.append(reader.readLine());
-
+			
 			result = builder.toString();
 			Log.i("HttpPost","php:"+result);
 		} catch (MalformedURLException e) {
