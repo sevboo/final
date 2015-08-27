@@ -17,66 +17,57 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningServiceInfo;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothManager;
-import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends FragmentActivity {
 	EditText ID,Password;
 	Button btnLogin,btnFind,btnNewjoin;
+	CheckBox autoLogin;
 	String mem_id,mem_pwd;
 	Intent intent;
 	StringBuilder builder;
 	String result;
-	GpsInfo gps;
+	
+	//자동로그인 관련 변수
+	SharedPreferences setting;
+	SharedPreferences.Editor editor;
 	
 	public static String RECO_UUID = "24DDF411-8CF1-440C-87CD-E368DAF9C93E";
 	public static final boolean SCAN_RECO_ONLY = true;
 	public static final boolean ENABLE_BACKGROUND_RANGING_TIMEOUT = true;
 	public static final boolean DISCONTINUOUS_SCAN = false;
-	private static final int REQUEST_ENABLE_BT = 1;
-	private BluetoothManager mBluetoothManager;
-	private BluetoothAdapter mBluetoothAdapter;
 	
-    @SuppressLint("NewApi") @Override
+	
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         
-        mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-		mBluetoothAdapter = mBluetoothManager.getAdapter();
-		
-		if(mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {  //블루투스 안켜져있을때
-			Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-			startActivityForResult(enableBTIntent, REQUEST_ENABLE_BT);
-		}
-		
-		
-		
+        startActivity(new Intent(this,StartActivity.class));
+        
         ID = (EditText) findViewById(R.id.inID);
 		Password = (EditText) findViewById(R.id.inPW);
 		btnLogin = (Button) findViewById(R.id.btnLogin);
 		btnFind = (Button) findViewById(R.id.btnFind);
 		btnNewjoin = (Button) findViewById(R.id.btnNewJoin);
-		
-		Intent getintent = getIntent();
-		
+		autoLogin = (CheckBox)findViewById(R.id.autologin);		
+		//자동로그인 관련
+		setting = getSharedPreferences("setting", 0);
+		editor= setting.edit();
 		
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder() //스레드 가능
     	.detectDiskReads()
@@ -84,16 +75,14 @@ public class MainActivity extends ActionBarActivity {
     	.detectNetwork()
     	.penaltyLog()
     	.build());
-
+		
+		
 		btnLogin.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				intent = new Intent(MainActivity.this, MenuActivity.class);
 				mem_id=ID.getText().toString();
 				mem_pwd=Password.getText().toString();
-				
-				//Log.i("MainActivity",mem_id);
-				//Log.i("MainActivity",mem_pwd);
 				
 				HttpPostData(); //웹서버 연결 메소드
 				
@@ -117,6 +106,7 @@ public class MainActivity extends ActionBarActivity {
 					intent.putExtra("checked_mem_phone", memberInfo[5]);
 					
 					startActivity(intent);
+					finish();
 				}
 			}
 		});
@@ -138,6 +128,43 @@ public class MainActivity extends ActionBarActivity {
 				
 			}
 		});
+		autoLogin.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				// TODO Auto-generated method stub
+				if(isChecked){
+					String Id = ID.getText().toString();
+					String PW = Password.getText().toString();
+					
+					editor.putString("Id", Id);
+					editor.putString("PW", PW);
+					editor.putBoolean("Auto_Login_enabled", true);
+					editor.commit();
+				}else{
+					editor.clear();
+					editor.commit();
+				}
+			}
+		});
+		
+		//자동로그인 체크여부-yes일때
+		if(setting.getBoolean("Auto_Login_enabled", false)){
+			Intent getintent = getIntent();
+	        String button_onoff_div = "0";
+
+	        //Toast.makeText(getApplicationContext(), getintent.getExtras().getString("login_button_div"), Toast.LENGTH_LONG).show();
+	        if(getintent.getExtras()==null){
+	        	ID.setText(setting.getString("Id", ""));
+				Password.setText(setting.getString("PW", ""));
+				autoLogin.setChecked(true);
+				btnLogin.performClick();
+	        }else{
+	        	ID.setText(setting.getString("Id", ""));
+				Password.setText(setting.getString("PW", ""));
+				autoLogin.setChecked(true);
+				//btnLogin.performClick();
+	        }	
+		}
     }
     
     public void HttpPostData(){
@@ -225,16 +252,6 @@ public class MainActivity extends ActionBarActivity {
         }
     }
     
-    @Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == REQUEST_ENABLE_BT && resultCode == Activity.RESULT_CANCELED || gps.isGetLocation == false) {
-			//If the request to turn on bluetooth is denied, the app will be finished.
-			//사용자가 블루투스 요청을 허용하지 않았을 경우, 어플리케이션은 종료됩니다.
-			finish();
-			return;
-		}
-		super.onActivityResult(requestCode, resultCode, data);
-	}
 		@Override
 	protected void onResume() {
 		Log.i("MainActivity", "onResume()");

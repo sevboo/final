@@ -17,12 +17,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
+        android:icon="@drawable/app"
+        android:label="Beconi"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="Beconi" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,7 +47,9 @@
         <activity android:name="MonthUse"></activity>
         <activity android:name="PayUse"></activity>
         <activity android:name="RecentUse"></activity>
-        <activity android:name="RangingActivity" />
+        <activity android:name="RangingActivity" /> 
+        <activity android:name="StartActivity"></activity>
+        <activity android:name="PopupActivity" android:theme="@android:style/Theme.Dialog"></activity>      
     </application>
 
 </manifest>

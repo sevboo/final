@@ -22,12 +22,17 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Notification.Builder;
+import android.app.PendingIntent.CanceledException;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat.BigTextStyle;
 import android.util.Log;
 
 import com.perples.recosdk.RECOBeacon;
@@ -42,11 +47,12 @@ import com.perples.recosdk.RECOServiceConnectListener;
 public class BackgroundRangingService extends Service implements
 		RECOMonitoringListener, RECORangingListener, RECOServiceConnectListener {
 	StringBuilder builder;
-	String result;
-	String [] result_arr = new String[4];
+	String result1,result2;
+	String [] result_arr1 = new String[4];
+	String [] result_arr2 = new String[4];
 	GpsInfo gps=new GpsInfo(BackgroundRangingService.this);
 	
-	String now_time;
+	String now_time,now_time2;
 
 	private long mScanDuration = (1 / 2) * 1000L;
 	private long mSleepDuration = (1 / 4) * 1000L;
@@ -61,8 +67,8 @@ public class BackgroundRangingService extends Service implements
 	
 	int count = 0;
 	String major;
-	
-	ArrayList<String> result_array = new ArrayList<String>();;
+	Boolean detection;
+	ArrayList<String> result_array = new ArrayList<String>();
 	String[][] recentInfo = new String[50][50];
 
 	@Override
@@ -276,34 +282,63 @@ public class BackgroundRangingService extends Service implements
 		*/
 		// rssi 크기가 -70db 보다 큰 beacon의 정보를 팝업으로 띄우기(최초 1번만)
 		for (int i = 0; i < mRangingAdapter.mRangedBeacons.size(); i++) {
+			try{
 			if (mRangingAdapter.mRangedBeacons.get(i).getRssi() >= -70) {
 				count++;
+				
 				if (count == 1) {
 					major = String.valueOf(mRangingAdapter.mRangedBeacons.get(i).getMajor());
-
-	                now_time = new SimpleDateFormat("yyyyMMdd HHmmss").format(new Date(System.currentTimeMillis()));
 					
+	                now_time = new SimpleDateFormat("yyyyMMdd HHmmss").format(new Date(System.currentTimeMillis()));
+	                now_time2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date(System.currentTimeMillis()));
 					//아이디, 메이져값, 위도, 경도, 현재시간
 					
 	                
-					HttpPostData();
+					InputData();
 					
-					StringTokenizer tokened = new StringTokenizer(result,",");
-					int numberOfToken = tokened.countTokens();
+					StringTokenizer tokened1 = new StringTokenizer(result1,",");
+					int numberOfToken1 = tokened1.countTokens();
 					
-					for(int j=0;j<numberOfToken;j++){
-						result_arr[j]=tokened.nextToken();
+					for(int j=0;j<numberOfToken1;j++){
+						result_arr1[j]=tokened1.nextToken();
 					}
 					
-					if(Integer.parseInt(result_arr[2])==0){
-						this.popupNotification("하차 정보",result_arr[0]+"\n"+result_arr[1]+"\n"+result_arr[3]);
-					}else if (Integer.parseInt(result_arr[2])==1){
-						this.popupNotification("승차 정보",result_arr[0]+"\n"+result_arr[1]+"\n"+result_arr[3]);
+					if(Integer.parseInt(result_arr1[2])==0){
+						this.popupNotification("하차 정보","시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]);
+						//this.getMessage("하차 정보", "시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]);
+					}else if (Integer.parseInt(result_arr1[2])==1){
+						this.popupNotification("승차 정보","시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]);
+						//this.getMessage("승차 정보", "시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]);
+						if(Integer.parseInt(major.substring(0, 1))==1){
+							while(true){
+								detection=false;
+								for (int k = 0; k < mRangingAdapter.mRangedBeacons.size(); k++) {
+									if (mRangingAdapter.mRangedBeacons.get(k).getMajor() == Integer.parseInt(major)){
+										detection=true;
+									}
+								}
+								if(detection=false){
+									OutputData();
+									StringTokenizer tokened2 = new StringTokenizer(result2,",");
+									int numberOfToken2 = tokened2.countTokens();
+									
+									for(int a=0;a<numberOfToken2;a++){
+										result_arr2[a]=tokened2.nextToken();
+									}
+									this.popupNotification("하차 정보","시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]);
+									//this.getMessage("하차 정보", "시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]);
+									break;
+								}
+							}
+						}
 					}else{
-						this.popupNotification("환승 정보",result_arr[0]+"\n"+result_arr[1]+"\n"+result_arr[3]);
-					}
-					this.popupNotification("-60db이상 정보 ","major : "+mRangingAdapter.mRangedBeacons.get(0).getMajor()+
-							"\n rssi : "+mRangingAdapter.mRangedBeacons.get(0).getRssi());
+						this.popupNotification("환승 정보","시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]);
+						//this.getMessage("환승 정보", "시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]);
+						}
+					
+					
+					//this.popupNotification("-60db이상 정보 ","major : "+mRangingAdapter.mRangedBeacons.get(0).getMajor()+
+						//	"\n rssi : "+mRangingAdapter.mRangedBeacons.get(0).getRssi());
 					//count = 100;
 					/*
 					new AlertDialog.Builder(this)
@@ -324,27 +359,59 @@ public class BackgroundRangingService extends Service implements
 				}
 				
 			}
+			}catch(IndexOutOfBoundsException e){
+				
+			}
 		}
 	}
-
+ 
+	
+	private void getMessage(String title,String content){
+		Intent popupintent = new Intent(getApplicationContext(),PopupActivity.class);
+		popupintent.putExtra("on_off_div", title);
+		popupintent.putExtra("content", content);
+		PendingIntent pie= PendingIntent.getActivity(getApplicationContext(), 0, popupintent, PendingIntent.FLAG_ONE_SHOT);
+		try {
+		 pie.send();
+		} catch (CanceledException e) {
+		}
+		
+	}
 	private void popupNotification(String title,String msg) {
 		Log.i("RECOBackgroundRangingService", "popupNotification()");
-		String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.KOREA).format(new Date());
+		//String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.KOREA).format(new Date());
 		long[] vibrate = {0, 100, 200, 300}; 
 		NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setSmallIcon(R.drawable.ic_launcher)
-																				.setContentTitle(title)
-																				.setContentText(msg);
-		NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-		builder.setStyle(inboxStyle);
-		builder.setVibrate(vibrate);
-		//builder.setSound(file://sdcard/notification/ringer.mp3);
-		nm.notify(mNotificationID, builder.build());
-		mNotificationID = (mNotificationID - 1) % 1000 + 9000;
+		Intent intent = new Intent(this,MainActivity.class);
+		PendingIntent pintent1 = PendingIntent.getActivity(this, 0, intent, 0);
+		
+		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+		mBuilder.setSmallIcon(R.drawable.ic_launcher);
+		mBuilder.setContentTitle(title);
+		mBuilder.setContentText(msg);
+		mBuilder.setVibrate(vibrate);
+		mBuilder.setContentIntent(pintent1);
+		
+		NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle();
+		style.setSummaryText("and More +");
+		style.setBigContentTitle(title);
+		style.bigText(msg);
+		mBuilder.setStyle(style);
+		nm.notify(0, mBuilder.build());
+		/*
+		Notification notification = new NotificationCompat.BigTextStyle(
+				new NotificationCompat.Builder(getApplicationContext())
+				.setContentTitle(title)
+				.setContentText(msg)
+				.setSmallIcon(R.drawable.ic_launcher)
+				.setVibrate(vibrate)
+				.setContentIntent(pintent1))
+		.setSummaryText("and More+")
+		.build();
+		nm.notify(0, notification);*/
 	}
 	@Override
 	public IBinder onBind(Intent intent) {
-		// This method is not used
 		return null;
 	}
 
@@ -373,8 +440,8 @@ public class BackgroundRangingService extends Service implements
 		return;
 	}
 
-	public void HttpPostData() {
-		Log.i("RECOBackgroundRangingService", "httppostdata");
+	public void InputData() {
+		Log.i("RECOBackgroundRangingService", "InputData");
 		try {
 			URL url = new URL("https://cic.hongik.ac.kr/b289076/popupImport.php");// php 파일수정 필요
 																					
@@ -404,7 +471,7 @@ public class BackgroundRangingService extends Service implements
 			StringBuffer buffer = new StringBuffer();
 			buffer.append("major=" + major+"&mem_id="+MenuActivity.memInfoArray[0]+"&lati="+lati+"&longi="+longi
 					+"&now_time="+now_time);
-			Log.i("HttpPost","major=" + major+"&mem_id="+MenuActivity.memInfoArray[0]+"&lati="+lati+"&longi="+longi
+			Log.i("InputData","major=" + major+"&mem_id="+MenuActivity.memInfoArray[0]+"&lati="+lati+"&longi="+longi
 					+"&now_time="+now_time);
 			// php로 보내기
 			PrintWriter writer = new PrintWriter(new OutputStreamWriter(
@@ -415,11 +482,14 @@ public class BackgroundRangingService extends Service implements
 			// php에서 받아오기
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
 					connection.getInputStream(), "EUC-KR"));
-			builder = new StringBuilder();
-			builder.append(reader.readLine());
+			String resultStr;
+			while ((resultStr = reader.readLine()) != null) {
+				builder = new StringBuilder();
+				builder.append(resultStr);
+				result1 = builder.toString();
+			}
 			
-			result = builder.toString();
-			Log.i("HttpPost","php:"+result);
+			Log.i("HttpPost","php:"+result1);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -428,7 +498,64 @@ public class BackgroundRangingService extends Service implements
 
 		}
 	}
+	public void OutputData() {
+		Log.i("RECOBackgroundRangingService", "OutputData");
+		try {
+			URL url = new URL("https://cic.hongik.ac.kr/b289076/popupExport.php");// php 파일수정 필요
+																					
 
+			trustAllHosts(); // ssl socket 적용
+
+			HttpsURLConnection https = (HttpsURLConnection) url
+					.openConnection();
+			https.setHostnameVerifier(new HostnameVerifier() {
+
+				@Override
+				public boolean verify(String hostname, SSLSession session) {
+					return true;
+				}
+			});
+
+			HttpURLConnection connection = https;
+
+			connection.setDefaultUseCaches(false);
+			connection.setDoInput(true);
+			connection.setDoOutput(true);
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("content-type",
+					"application/x-www-form-urlencoded");
+
+			// buffer:php로 보낼 구문
+			StringBuffer buffer = new StringBuffer();
+			buffer.append("major=" + major+"&mem_id="+MenuActivity.memInfoArray[0]+"&lati="+lati+"&longi="+longi
+					+"&now_time="+now_time);
+			Log.i("OutputData","major=" + major+"&mem_id="+MenuActivity.memInfoArray[0]+"&lati="+lati+"&longi="+longi
+					+"&now_time="+now_time);
+			// php로 보내기
+			PrintWriter writer = new PrintWriter(new OutputStreamWriter(
+					connection.getOutputStream(), "EUC-KR"));
+			writer.write(buffer.toString());
+			writer.flush();
+			connection.connect();
+			// php에서 받아오기
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					connection.getInputStream(), "EUC-KR"));
+			String resultStr;
+			while ((resultStr = reader.readLine()) != null) {
+				builder = new StringBuilder();
+				builder.append(resultStr);
+				result2 = builder.toString();
+			}
+			
+			Log.i("HttpPost","php:"+result2);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+	}
 	private static void trustAllHosts() {
 		// Create a trust manager that does not validate certificate chains
 		TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {

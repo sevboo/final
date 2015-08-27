@@ -1,20 +1,34 @@
 package com.example.project_idfind;
  
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 
-import android.R.string;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.AlertDialog;
 import android.app.ActivityManager.RunningServiceInfo;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,10 +43,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.perples.recosdk.RECOBeacon;
-import com.perples.recosdk.RECOBeaconRegion;
-import com.perples.recosdk.RECOErrorCode;
-import com.perples.recosdk.RECORangingListener;
  
 public class MenuActivity extends Activity {
 	
@@ -51,7 +61,14 @@ public class MenuActivity extends Activity {
     String lati;
 	String longi;
 	
-    @Override
+	StringBuilder builder;
+	String result;
+	
+	private BluetoothManager mBluetoothManager;
+	private BluetoothAdapter mBluetoothAdapter;
+	private static final int REQUEST_ENABLE_BT = 1;
+	
+	@SuppressLint("NewApi")@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
@@ -68,7 +85,15 @@ public class MenuActivity extends Activity {
 		memInfoArray[2] = getintent.getExtras().getString("checked_mem_name");
 		memInfoArray[3] = getintent.getExtras().getString("checked_mem_email");
 		memInfoArray[4] = getintent.getExtras().getString("checked_mem_phone");
- 
+		
+		mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+		mBluetoothAdapter = mBluetoothManager.getAdapter();
+		
+		if(mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {  //블루투스 안켜져있을때
+			Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+			startActivityForResult(enableBTIntent, REQUEST_ENABLE_BT);
+		}
+		
         textCustomId.setText("회원번호   "+memInfoArray[0]);
         gps = new GpsInfo(MenuActivity.this);
         // GPS 사용유무 가져오기
@@ -88,12 +113,20 @@ public class MenuActivity extends Activity {
             // GPS 를 사용할수 없으므로
             gps.showSettingsAlert();
         }
-        
+        //background 서비스 시작
+        intent = new Intent(this, BackgroundRangingService.class);
+		
+		intent.putExtra("lati", lati);
+		intent.putExtra("longi", longi);
+		startService(intent);
+		
         // preparing list data
         prepareListData();
         
         //php를 걸쳐서 미결제 금액도 표시해줘야함
- 
+        NonPayData();
+        textSumCharge.setText(result+"원");
+        
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
  
         // setting list adapter
@@ -105,7 +138,9 @@ public class MenuActivity extends Activity {
 			public void onClick(View v) {
 				intent = new Intent(MenuActivity.this, MainActivity.class);
 				Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.",Toast.LENGTH_LONG).show();
+				intent.putExtra("login_button_div", "0");
 				startActivity(intent);
+				finish();
 			}
 		});
  
@@ -185,6 +220,18 @@ public class MenuActivity extends Activity {
             }
         });
     }
+    
+    @Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == REQUEST_ENABLE_BT && resultCode == Activity.RESULT_CANCELED || gps.isGetLocation == false) {
+			//If the request to turn on bluetooth is denied, the app will be finished.
+			//사용자가 블루투스 요청을 허용하지 않았을 경우, 어플리케이션은 종료됩니다.
+			finish();
+			return;
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+    
     @Override
 	protected void onResume() {
 		Log.i("MenuActivity", "onResume()");
@@ -246,7 +293,7 @@ public class MenuActivity extends Activity {
 			
 			intent.putExtra("lati", lati);
 			intent.putExtra("longi", longi);
-			Log.i("MenuActivity", "lati"+lati+", longi"+longi);
+			//Log.i("MenuActivity", "lati"+lati+", longi"+longi);
 			startService(intent);
 			//stopService(new Intent(this, Noselect_BackgroundRangingService.class));
 		} else {
@@ -255,13 +302,7 @@ public class MenuActivity extends Activity {
 			//startService(new Intent(this,Noselect_BackgroundRangingService.class));
 		}
 	}
-    public void onButtonClicked(View v) {
-		Button btn = (Button)v;
-		if(btn.getId() == R.id.rangingButton) {
-			final Intent intent = new Intent(this, RangingActivity.class);
-			startActivity(intent);
-		}
-	}
+
     private boolean isBackgroundRangingServiceRunning(Context context) {
 		ActivityManager am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
 		for(RunningServiceInfo runningService : am.getRunningServices(Integer.MAX_VALUE)) {
@@ -270,5 +311,93 @@ public class MenuActivity extends Activity {
 			}
 		}
 		return false;
+	}
+    public void NonPayData() {
+		Log.i("RECOBackgroundRangingService", "OutputData");
+		try {
+			URL url = new URL("https://cic.hongik.ac.kr/b289076/NonPaySum.php");// php 파일수정 필요
+																					
+
+			trustAllHosts(); // ssl socket 적용
+
+			HttpsURLConnection https = (HttpsURLConnection) url
+					.openConnection();
+			https.setHostnameVerifier(new HostnameVerifier() {
+
+				@Override
+				public boolean verify(String hostname, SSLSession session) {
+					return true;
+				}
+			});
+
+			HttpURLConnection connection = https;
+
+			connection.setDefaultUseCaches(false);
+			connection.setDoInput(true);
+			connection.setDoOutput(true);
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("content-type",
+					"application/x-www-form-urlencoded");
+
+			// buffer:php로 보낼 구문
+			StringBuffer buffer = new StringBuffer();
+			buffer.append("mem_id="+memInfoArray[0]);
+
+			// php로 보내기
+			PrintWriter writer = new PrintWriter(new OutputStreamWriter(
+					connection.getOutputStream(), "EUC-KR"));
+			writer.write(buffer.toString());
+			writer.flush();
+			connection.connect();
+			// php에서 받아오기
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					connection.getInputStream(), "EUC-KR"));
+			String resultStr;
+			while ((resultStr = reader.readLine()) != null) {
+				builder = new StringBuilder();
+				builder.append(resultStr);
+				result = builder.toString();
+			}
+			
+			Log.i("HttpPost","php:"+result);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+	}
+    private static void trustAllHosts() {
+		// Create a trust manager that does not validate certificate chains
+		TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+			public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+				return new java.security.cert.X509Certificate[] {};
+			}
+
+			@Override
+			public void checkClientTrusted(
+					java.security.cert.X509Certificate[] chain, String authType)
+					throws java.security.cert.CertificateException {
+			}
+
+			@Override
+			public void checkServerTrusted(
+					java.security.cert.X509Certificate[] chain, String authType)
+					throws java.security.cert.CertificateException {
+				// TODO Auto-generated method stub
+
+			}
+		} };
+
+		// Install the all-trusting trust manager
+		try {
+			SSLContext sc = SSLContext.getInstance("TLS");
+			sc.init(null, trustAllCerts, new java.security.SecureRandom());
+			HttpsURLConnection
+					.setDefaultSSLSocketFactory(sc.getSocketFactory());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
