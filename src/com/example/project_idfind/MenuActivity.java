@@ -198,6 +198,7 @@ public class MenuActivity extends Activity {
                 }else if(groupPosition == 1 ){
                 	if(childPosition == 0){
                 		intent = new Intent(MenuActivity.this, PayUse.class); //결제 내역
+                		intent = new Intent(MenuActivity.this, PayActivity.class); //결제하기
                 	}
                 }else if(groupPosition == 2 ){
                 	if(childPosition == 0){

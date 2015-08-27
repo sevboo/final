@@ -17,7 +17,7 @@
                 android:id="@+id/textView1"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:background="#99ccff"
+                android:background="#BBDEFB"
                 android:text="" />
 
             <Button
@@ -59,14 +59,14 @@
             android:id="@+id/textCustomId"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffcc"
+            android:background="#90CAF9"
             android:textSize="15dp" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#ffe3b5"
+            android:background="#64B5F6"
             android:text="미결제 누적금액"
             android:textSize="20dp" />
 
@@ -74,7 +74,7 @@
             android:id="@+id/textSumCharge"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#ffe3b5"
+            android:background="#64B5F6"
             android:gravity="center"
             android:text="10000원"
             android:textSize="20dp" />
@@ -88,7 +88,9 @@
         <ExpandableListView
             android:id="@+id/lvExp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent"
+            android:background="#BBDEFB" >
+
         </ExpandableListView>
    
     </LinearLayout>

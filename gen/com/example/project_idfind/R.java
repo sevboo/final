@@ -1357,11 +1357,12 @@ containing a value of this type.
         public static final int menu=0x7f030023;
         public static final int month_use=0x7f030024;
         public static final int notice=0x7f030025;
-        public static final int popup=0x7f030026;
-        public static final int ranging_list=0x7f030027;
-        public static final int recent_use=0x7f030028;
-        public static final int startactivity=0x7f030029;
-        public static final int support_simple_spinner_dropdown_item=0x7f03002a;
+        public static final int pay=0x7f030026;
+        public static final int popup=0x7f030027;
+        public static final int ranging_list=0x7f030028;
+        public static final int recent_use=0x7f030029;
+        public static final int startactivity=0x7f03002a;
+        public static final int support_simple_spinner_dropdown_item=0x7f03002b;
     }
     public static final class menu {
         public static final int main=0x7f0c0000;
