@@ -5,7 +5,7 @@
     android:background="#E1F5FE">
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/mdiv_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="공지사항" />

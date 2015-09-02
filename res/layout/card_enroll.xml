@@ -3,7 +3,7 @@
     android:layout_height="fill_parent" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/mdiv_list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="#99ccff"
@@ -15,7 +15,7 @@
         android:orientation="vertical" >
         
         <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/time_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -85,7 +85,7 @@
             android:ems="10" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/mpay_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

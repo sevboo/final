@@ -1,50 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/total_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E1F5FE"
     android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp" >
+        android:layout_height="50dp" >
 
         <TextView
             android:id="@+id/div_list"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="#E1F5FE"
             android:gravity="center"
-            android:text="승/하차" />
+            android:text="div" />
 
         <TextView
             android:id="@+id/time_list"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="#E1F5FE"
             android:gravity="center"
-            android:text="시간" />
+            android:text="time" />
 
         <TextView
             android:id="@+id/pay_list"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="#E1F5FE"
             android:gravity="center"
-            android:text="요금" />
+            android:text="pay" />
 
     </LinearLayout>
-
-    <ListView
-        android:id="@+id/recent_use"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp" >
-    </ListView>
-
+    
 </LinearLayout>

@@ -1,8 +1,5 @@
 package com.example.project_idfind;
 
-import android.app.Activity;
-import android.os.Bundle;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,7 +9,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.StringTokenizer;
 
 import javax.net.ssl.HostnameVerifier;
@@ -25,80 +21,69 @@ import javax.net.ssl.X509TrustManager;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class RecentUse extends ActionBarActivity {
 
-	ArrayList<String> result_array = new ArrayList<String>();;
-	TableLayout tableLayout;
+	ArrayList<String> result_array = new ArrayList<String>();
 	StringBuilder builder;
-	TableRow tablerow;
 	String[][] recentInfo = new String[50][50];
 	String mem_id = MenuActivity.memInfoArray[0];
-
-	int[] timeId = { R.id.time1, R.id.time2, R.id.time3, R.id.time4,R.id.time5, R.id.time6,
-			R.id.time7, R.id.time8, R.id.time9, R.id.time10	 };
-	int[] onoffdivId = { R.id.onoffdiv1, R.id.onoffdiv2, R.id.onoffdiv3, R.id.onoffdiv4,R.id.onoffdiv5, R.id.onoffdiv6,
-			R.id.onoffdiv7, R.id.onoffdiv8, R.id.onoffdiv9, R.id.onoffdiv10	 };
-	int[] chargeId = { R.id.charge1, R.id.charge2, R.id.charge3, R.id.charge4,R.id.charge5, R.id.charge6,
-			R.id.charge7, R.id.charge8, R.id.charge9, R.id.charge10	 };
-	
-	TextView[] timeText = new TextView[timeId.length];
-	TextView[] onoffdivText = new TextView[onoffdivId.length];
-	TextView[] chargeText = new TextView[chargeId.length];
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recent_use);
-		tableLayout = (TableLayout) findViewById(R.id.tableLayout);
+		//ArrayList<use_info> use_list = new ArrayList<use_info>();
+		recent_use_adapter UseAdapter = new recent_use_adapter(this);
+		use_info temp_use = null;
+		ListView recent_listview = (ListView)findViewById(R.id.recent_use);
+		recent_listview.setAdapter(UseAdapter);	
 		
-		tableLayout.setVisibility(android.view.View.VISIBLE);
-
-		for (int i = 0; i < timeId.length; i++) {
-			timeText[i] = (TextView) findViewById(timeId[i]);
-			onoffdivText[i] = (TextView) findViewById(onoffdivId[i]);
-			chargeText[i] = (TextView) findViewById(chargeId[i]);
-		}
-
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-				// 스레드 가능
-				.detectDiskReads().detectDiskWrites().detectNetwork()
-				.penaltyLog().build());
+		// 스레드 가능
+		.detectDiskReads().detectDiskWrites().detectNetwork()
+		.penaltyLog().build());
 
 		HttpPostData(); // 웹서버 연결 메소드
-
+		
 		for (int i=0; i< result_array.size(); i++) {
-			//Toast.makeText(getApplication(), "result_array= "+result_array.get(i), Toast.LENGTH_LONG).show();
 			StringTokenizer tokened = new StringTokenizer(result_array.get(i), ",");
 			int numberOfToken = tokened.countTokens();
 			
 
 			for (int j = 0; j < numberOfToken; j++) {
 				recentInfo[i][j] = tokened.nextToken(); // log 테이블에서 지정년도의 월수에  따른 금액 합
-				//Toast.makeText(getApplication(), "recentInfo["+i+"]["+j+"]="+recentInfo[i][j], Toast.LENGTH_LONG).show();
+				
 			}
 		}
-
-			
 		for (int i = 0; i < result_array.size(); i++) {
-			onoffdivText[i].setText(recentInfo[i][0]);
-			timeText[i].setText(recentInfo[i][1]);
-			chargeText[i].setText(recentInfo[i][2]);
+			String temp_div=recentInfo[i][0];
+			if(temp_div.equalsIgnoreCase("0")){
+				temp_use = new use_info("하차",recentInfo[i][1],recentInfo[i][2]);
+			}else if(temp_div.equalsIgnoreCase("1")){
+				temp_use = new use_info("승차",recentInfo[i][1],recentInfo[i][2]);
+			}else if(temp_div.equalsIgnoreCase("2")){
+				temp_use = new use_info("환승",recentInfo[i][1],recentInfo[i][2]);
+			}
+			UseAdapter.use_list.add(temp_use);
 		}
-
+		
+		
+		
 	}
-
+	class use_info{
+		public String div;
+		public String time;
+		public String pay;
+		
+		public use_info(String div,String time,String pay){
+			this.div=div;
+			this.time=time;
+			this.pay=pay;
+		}
+	}
 	public void HttpPostData() {
 		try {
 			URL url = new URL(

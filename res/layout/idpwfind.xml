@@ -5,7 +5,7 @@
     android:background="#E1F5FE">
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/mdiv_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -18,7 +18,7 @@
         android:layout_marginTop="20dp">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/time_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="이메일 : " />
@@ -42,7 +42,7 @@
         android:layout_marginTop="10dp" >
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/mpay_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="이름 : " />

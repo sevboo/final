@@ -14,7 +14,7 @@
             android:layout_height="match_parent" >
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/mdiv_list"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:background="#BBDEFB"
@@ -41,7 +41,7 @@
         android:paddingRight="20dp" >
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/time_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -57,27 +57,27 @@
 
         <TextView
             android:id="@+id/textCustomId"
-            android:layout_width="fill_parent"
+            android:layout_width="149dp"
             android:layout_height="wrap_content"
-            android:background="#90CAF9"
+            android:background="@drawable/my_rounded_corner"
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/mpay_list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#64B5F6"
             android:text="미결제 누적금액"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:background="@drawable/my_rounded_corner"/>
 
         <TextView
             android:id="@+id/textSumCharge"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#64B5F6"
             android:gravity="center"
             android:text="10000원"
-            android:textSize="20dp" />
+            android:textSize="20dp" 
+            android:background="#64B5F6"/>
     </LinearLayout>
 
     <LinearLayout

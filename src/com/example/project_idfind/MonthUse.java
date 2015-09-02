@@ -22,6 +22,8 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import com.example.project_idfind.RecentUse.use_info;
+
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
@@ -31,6 +33,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -46,26 +49,19 @@ public class MonthUse extends ActionBarActivity {
 	StringBuilder builder;
 	TableRow tablerow;
 	Button inquiryBtn;
-	String[] yearpay;
+	String[] recentInfo = new String[50];
 	String mem_id = MenuActivity.memInfoArray[0];
-
-	int[] monthId = { R.id.jan_use, R.id.feb_use, R.id.mar_use, R.id.april_use,
-			R.id.may_use, R.id.june_use, R.id.july_use, R.id.august_use,
-			R.id.sept_use, R.id.octo_use, R.id.novem_use, R.id.decem_use };
-	TextView[] month = new TextView[monthId.length];
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.month_use);
+		
+		
 		spinner = (Spinner) findViewById(R.id.spinner1);
-		tableLayout = (TableLayout) findViewById(R.id.tableLayout);
-		inquiryBtn = (Button) findViewById(R.id.inquiryBtn);
-
-		for (int i = 0; i < month.length; i++) {
-			month[i] = (TextView) findViewById(monthId[i]);
-		}
-
+		//tableLayout = (TableLayout) findViewById(R.id.tableLayout);
+		//inquiryBtn = (Button) findViewById(R.id.inquiryBtn);
+		
 		ArrayList<String> list = new ArrayList<String>();
 
 		list.add("[년도를 선택하세요]");
@@ -73,7 +69,10 @@ public class MonthUse extends ActionBarActivity {
 		for (int i = Calendar.getInstance().get(Calendar.YEAR); i > 2000; i--) {
 			list.add(i + "");
 		}
-
+		
+		
+		
+		
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_dropdown_item, list);
 		spinner.setAdapter(adapter);
@@ -83,7 +82,7 @@ public class MonthUse extends ActionBarActivity {
 					int position, long id) {
 				selectYear = spinner.getSelectedItem().toString();
 
-				tableLayout.setVisibility(android.view.View.INVISIBLE);
+				//tableLayout.setVisibility(android.view.View.INVISIBLE);
 
 				Toast.makeText(MonthUse.this, "선택된 년도 : " + selectYear,
 						Toast.LENGTH_LONG).show();
@@ -94,38 +93,51 @@ public class MonthUse extends ActionBarActivity {
 
 			}
 		});
-		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-				// 스레드 가능
-				.detectDiskReads().detectDiskWrites().detectNetwork()
-				.penaltyLog().build());
-		inquiryBtn.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				HttpPostData(); // 웹서버 연결 메소드
-
-				Toast.makeText(MonthUse.this, "RESULT :" + result_Sum,
-						Toast.LENGTH_LONG).show();
-
-				StringTokenizer tokened = new StringTokenizer(result_Sum, ",");
-				int numberOfToken = tokened.countTokens();
-				yearpay = new String[50];
-
-				for (int i = 0; i < numberOfToken; i++) {
-					yearpay[i] = tokened.nextToken(); // log 테이블에서 지정년도의 월수에 따른
-														// 금액 합
-				}
-
-				tableLayout.setVisibility(android.view.View.VISIBLE);
-
-				for (int i = 0; i < month.length; i++) {
-					month[i].setText(yearpay[i]);
-				}
-
-			}
-		});
+		
+		
+		
 	}
 
+	public void onClick(View v) {
+		
+		MonthUseAdapter UseAdapter = new MonthUseAdapter(this);
+		ListView month_listview = (ListView)findViewById(R.id.month_use);
+		month_listview.setAdapter(UseAdapter);
+		
+		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+		// 스레드 가능
+		.detectDiskReads().detectDiskWrites().detectNetwork()
+		.penaltyLog().build());
+		
+		HttpPostData(); // 웹서버 연결 메소드
+
+		Toast.makeText(MonthUse.this, "RESULT :" + result_Sum,
+					Toast.LENGTH_LONG).show();
+
+		StringTokenizer tokened = new StringTokenizer(result_Sum, ",");
+		int numberOfToken = tokened.countTokens();
+		
+		for (int i = 0; i < numberOfToken; i++) {
+			recentInfo[i] = tokened.nextToken(); // log 테이블에서 지정년도의 월수에 따른
+													// 금액 합
+			
+			month_info month_use = new month_info((i+1)+"월",recentInfo[i]);
+			UseAdapter.month_list.add(month_use);
+				
+		}
+		
+	}
+
+	class month_info{
+		public String div;
+		public String pay;
+		
+		public month_info(String div,String pay){
+			this.div=div;
+			this.pay=pay;
+		}
+	}
+	
 	public void HttpPostData() {
 		try {
 			URL url = new URL(
@@ -155,7 +167,7 @@ public class MonthUse extends ActionBarActivity {
 
 			// buffer:php로 보낼 구문
 			StringBuffer buffer = new StringBuffer();
-			buffer.append("selectYear=" + selectYear + "&mem_id=" + mem_id);
+			buffer.append("selectYear=" + selectYear + "&mem_id=" + mem_id); //
 			// php로 보내기
 
 			PrintWriter writer = new PrintWriter(new OutputStreamWriter(
