@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20px"
             android:layout_marginTop="10px"
-            android:text="회원 번호" />
+            android:text="회원 번호"/>
 
         <EditText
             android:id="@+id/UserNum"
@@ -48,7 +48,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
-            android:layout_weight="1" />
+            android:layout_weight="1" 
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:hint="영어이름을 써주세요"/>
     </LinearLayout>
 
     <LinearLayout
@@ -67,7 +70,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
-            android:layout_weight="1" />
+            android:layout_weight="1" 
+            android:imeOptions="actionNext"
+            android:inputType="text"/>
     </LinearLayout>
     
     <LinearLayout
@@ -79,7 +84,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20px"
             android:layout_marginTop="5px"
-            android:text="생년월일" />
+            android:text="생년월일" 
+            />
 
     </LinearLayout>
     
@@ -92,7 +98,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:imeOptions="actionNext"
+            android:hint="ex)1990" 
+            android:inputType="text"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -105,7 +114,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
-            android:layout_weight="1" />
+            android:layout_weight="1" 
+            android:imeOptions="actionNext"
+            android:hint="ex)01~12"
+            android:inputType="text"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -118,7 +130,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
-            android:layout_weight="1" />
+            android:layout_weight="1" 
+            android:imeOptions="actionNext"
+            android:hint="ex)01~31"
+            android:inputType="text"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -144,7 +159,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:imeOptions="actionNext" 
+            android:hint="-없이 입력하세요"
+            android:inputType="text"/>
     </LinearLayout>
     
     <LinearLayout
@@ -163,7 +181,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:imeOptions="actionNext" 
+            android:inputType="text"/>
     </LinearLayout>
     
     <LinearLayout
@@ -182,7 +202,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
-            android:layout_weight="1" />
+            android:layout_weight="1" 
+            android:imeOptions="actionNext"
+            android:hint="모든 숫자를 이어서 입력하세요"
+            android:inputType="text"/>
     </LinearLayout>
     
     <LinearLayout
@@ -201,7 +224,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
-            android:layout_weight="1" />
+            android:layout_weight="1" 
+            android:imeOptions="actionDone" 
+            android:hint="ex)월일 이어서 입력하세요"
+            android:inputType="text"/>
     </LinearLayout>
     
     <LinearLayout
@@ -216,15 +242,6 @@
             android:layout_weight="1" 
             android:textSize="40px"
             android:text="가입하기" />
-        
-        <Button
-            android:id="@+id/CancleBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10px"
-            android:layout_weight="1" 
-            android:textSize="40px"
-            android:text="취소" />
         
     </LinearLayout>
     

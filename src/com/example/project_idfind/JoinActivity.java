@@ -21,8 +21,10 @@ import com.example.project_idfind.R;
 import com.example.project_idfind.JoinActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -31,17 +33,18 @@ import android.widget.Toast;
 
 public class JoinActivity extends Activity {
 
-	EditText UserName,UserPW,UserBirthYear,UserBirthMonth,UserBirthDay,UserPhone,UserEmail,UserCardNum,UserCardExp;
+	EditText UserNum,UserName,UserPW,UserBirthYear,UserBirthMonth,UserBirthDay,UserPhone,UserEmail,UserCardNum,UserCardExp;
 	Button JoinBtn,CancleBtn;
 	String user_id,user_name,user_password,user_birth_year,user_birth_month,user_birth_day,user_phone,user_email,user_card_num,user_card_expire;
 	StringBuilder builder;
-	String result;
+	String result_id,result;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.join);
         
+	    UserNum = (EditText) findViewById(R.id.UserNum);
 	    UserName = (EditText) findViewById(R.id.UserName);
 	    UserPW = (EditText) findViewById(R.id.UserPW);
 	    UserBirthYear = (EditText) findViewById(R.id.UserBirthYear);
@@ -53,7 +56,6 @@ public class JoinActivity extends Activity {
 	    UserCardExp = (EditText) findViewById(R.id.UserCardExp);
 	   
 	    JoinBtn = (Button) findViewById(R.id.JoinBtn);
-	    CancleBtn = (Button) findViewById(R.id.CancleBtn);
 		
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder() //스레드 가능
     	.detectDiskReads()
@@ -61,11 +63,15 @@ public class JoinActivity extends Activity {
     	.detectNetwork()
     	.penaltyLog()
     	.build());
-
+		
+		IdAutoMake();
+		UserNum.setText(result_id);
+		
 		JoinBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
+				user_id = UserNum.getText().toString();
 				user_name = UserName.getText().toString();
 				user_password = UserPW.getText().toString();
 				user_birth_year = UserBirthYear.getText().toString();
@@ -78,11 +84,52 @@ public class JoinActivity extends Activity {
 			
 				JoinMemData(); //웹서버 연동 부분
 				
-				Toast.makeText(JoinActivity.this, "회원가입이 완료되었습니다. ", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(JoinActivity.this, user_id+user_name+user_password+user_birth_year, Toast.LENGTH_SHORT).show();
+				
+				finish();
 			}
 		});
+	}
 	
-	   
+	public void IdAutoMake(){
+		try{
+			URL url = new URL("https://cic.hongik.ac.kr/b289076/IdAutoMake.php");
+			
+			trustAllHosts();
+			
+			HttpsURLConnection https = (HttpsURLConnection) url.openConnection();
+            https.setHostnameVerifier(new HostnameVerifier() {
+
+				@Override
+				public boolean verify(String hostname, SSLSession session) {
+					// TODO Auto-generated method stub
+					return true;
+				}
+            });
+
+            HttpURLConnection connection = https;			
+
+            connection.setDefaultUseCaches(false);
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("content-type", "application/x-www-form-urlencoded");
+			
+			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(),"EUC-KR"));
+			builder = new StringBuilder();
+			String str;
+			while ((str = reader.readLine()) != null) { 
+				builder.append(str);
+			}
+			//builder.append(reader.readLine());
+			result_id = builder.toString();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally{
+			
+		}
 	}
 	
 	public void JoinMemData(){
@@ -110,18 +157,27 @@ public class JoinActivity extends Activity {
             connection.setRequestProperty("content-type", "application/x-www-form-urlencoded");
 			
 			StringBuffer buffer = new StringBuffer();
-			buffer.append("user_name=" + user_name + "&user_password=" + user_password
+			buffer.append("user_id="+user_id+"&user_name=" + user_name + "&user_password=" + user_password
 					+ "&user_birth_year=" + user_birth_year +"&user_birth_month=" + user_birth_month +
 					"&user_birth_day=" + user_birth_day +"&user_phone=" + user_phone+ "&user_email="
 					+ user_email+ "&user_card_num=" + user_card_num	+ "&user_card_expire=" + user_card_expire);
+			
 			PrintWriter writer = new PrintWriter(new OutputStreamWriter(connection.getOutputStream(),"EUC-KR"));
 			writer.write(buffer.toString());
+			Toast.makeText(JoinActivity.this,buffer.toString() , Toast.LENGTH_LONG).show();
+			Log.i("Join",buffer.toString() );
 			writer.flush();
+			connection.connect();
+			
 			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(),"EUC-KR"));
 			builder = new StringBuilder();
-			builder.append(reader.readLine());
+			String str; 
+			while ((str = reader.readLine()) != null) {       // 서버에서 라인단위로 보내줄 것이므로 라인단위로 읽는다 
+                builder.append(str + "\n");                     // View에 표시하기 위해 라인 구분자 추가 
+           } 
 
 			result = builder.toString();
+			Log.i("Join",result );
 			
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

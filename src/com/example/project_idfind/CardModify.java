@@ -54,6 +54,13 @@ public class CardModify extends Activity {
 
 		cardModifyButton = (Button) findViewById(R.id.cardModifyButton);
 
+		editCardNum1.setText(MenuActivity.memInfoArray[5].subSequence(0,4));
+		editCardNum2.setText(MenuActivity.memInfoArray[5].subSequence(4,8));
+		editCardNum3.setText(MenuActivity.memInfoArray[5].subSequence(8,12));
+		editCardNum4.setText(MenuActivity.memInfoArray[5].subSequence(12,16));
+		
+		editExpirationDateMonth.setText(MenuActivity.memInfoArray[6].subSequence(0,2));
+		editExpirationDateYear.setText(MenuActivity.memInfoArray[6].subSequence(2,4));
 		cardModifyButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -110,13 +117,14 @@ public class CardModify extends Activity {
 					connection.getOutputStream(), "EUC-KR"));
 			writer.write(buffer.toString());
 			writer.flush();
+			/*
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
 					connection.getInputStream(), "EUC-KR"));
 			builder = new StringBuilder();
 			builder.append(reader.readLine());
 
 			result = builder.toString();
-
+			 */
 			Toast.makeText(CardModify.this, "카드 정보가 수정되었습니다. ",
 					Toast.LENGTH_SHORT).show();
 
@@ -128,7 +136,7 @@ public class CardModify extends Activity {
 
 		}
 	}
-
+	
 	private static void trustAllHosts() {
 		// Create a trust manager that does not validate certificate chains
 		TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {

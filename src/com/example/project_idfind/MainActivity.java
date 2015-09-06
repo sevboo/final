@@ -51,6 +51,7 @@ public class MainActivity extends FragmentActivity {
 	public static final boolean ENABLE_BACKGROUND_RANGING_TIMEOUT = true;
 	public static final boolean DISCONTINUOUS_SCAN = false;
 	
+	GpsInfo gps;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,12 @@ public class MainActivity extends FragmentActivity {
 		setting = getSharedPreferences("setting", 0);
 		editor= setting.edit();
 		
+		//정확한 위치정보를 위해 로그인화면에서 설정.
+		gps = new GpsInfo(MainActivity.this);
+		if(!gps.isGPSEnabled){
+			gps.showSettingsAlert();
+		}
+		
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder() //스레드 가능
     	.detectDiskReads()
     	.detectDiskWrites()
@@ -84,6 +91,7 @@ public class MainActivity extends FragmentActivity {
 				mem_id=ID.getText().toString();
 				mem_pwd=Password.getText().toString();
 				
+								
 				HttpPostData(); //웹서버 연결 메소드
 				
 				StringTokenizer tokened = new StringTokenizer(result,",");
@@ -104,6 +112,8 @@ public class MainActivity extends FragmentActivity {
 					intent.putExtra("checked_mem_name", memberInfo[3]);
 					intent.putExtra("checked_mem_email", memberInfo[4]);
 					intent.putExtra("checked_mem_phone", memberInfo[5]);
+					intent.putExtra("checked_mem_cardnum",memberInfo[6]);
+					intent.putExtra("checked_mem_cardexpire",memberInfo[7]);
 					
 					startActivity(intent);
 					finish();

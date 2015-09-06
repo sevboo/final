@@ -11,7 +11,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -28,7 +27,12 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,23 +48,19 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
  
-public class MenuActivity extends Activity {
+public class MenuActivity extends Activity{
 	
 	Button logoutBtn;
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
-    static String memInfoArray[] = { "", "", "", "", "" }; // 아이디, 비밀번호, 이름, 이메일, 핸드폰번호
+    static String memInfoArray[] = { "", "", "", "", "","","" }; // 아이디, 비밀번호, 이름, 이메일, 핸드폰번호,카드번호,카드유효기간
     HashMap<String, List<String>> listDataChild;
     Intent intent;
     TextView textCustomId,textSumCharge;
     
     Switch switch1;
-  
-    GpsInfo gps;
-    String lati;
-	String longi;
-	
+
 	StringBuilder builder;
 	String result;
 	
@@ -85,6 +85,8 @@ public class MenuActivity extends Activity {
 		memInfoArray[2] = getintent.getExtras().getString("checked_mem_name");
 		memInfoArray[3] = getintent.getExtras().getString("checked_mem_email");
 		memInfoArray[4] = getintent.getExtras().getString("checked_mem_phone");
+		memInfoArray[5] = getintent.getExtras().getString("checked_mem_cardnum");
+		memInfoArray[6] = getintent.getExtras().getString("checked_mem_cardexpire");
 		
 		mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
 		mBluetoothAdapter = mBluetoothManager.getAdapter();
@@ -95,29 +97,10 @@ public class MenuActivity extends Activity {
 		}
 		
         textCustomId.setText("회원번호   "+memInfoArray[0]);
-        gps = new GpsInfo(MenuActivity.this);
-        // GPS 사용유무 가져오기
-        if (gps.isGetLocation()) {
-
-            double latitude = gps.getLatitude();
-            double longitude = gps.getLongitude();
-             
-            lati = String.valueOf(latitude); //위도
-            longi = String.valueOf(longitude); //경도
-             
-            Toast.makeText(
-                    getApplicationContext(),
-                    "당신의 위치 - \n위도: " + latitude + "\n경도: " + longitude,
-                    Toast.LENGTH_LONG).show();
-        } else {
-            // GPS 를 사용할수 없으므로
-            gps.showSettingsAlert();
-        }
+        
         //background 서비스 시작
         intent = new Intent(this, BackgroundRangingService.class);
-		
-		intent.putExtra("lati", lati);
-		intent.putExtra("longi", longi);
+
 		startService(intent);
 		
         // preparing list data
@@ -221,7 +204,7 @@ public class MenuActivity extends Activity {
             }
         });
     }
-    
+    /*
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == REQUEST_ENABLE_BT && resultCode == Activity.RESULT_CANCELED || gps.isGetLocation == false) {
@@ -232,12 +215,13 @@ public class MenuActivity extends Activity {
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-    
+    */
     @Override
 	protected void onResume() {
 		Log.i("MenuActivity", "onResume()");
 		super.onResume();
-	    
+		
+
 		if(this.isBackgroundRangingServiceRunning(this)) {
 			ToggleButton toggle = (ToggleButton)findViewById(R.id.background_toggle);
 			toggle.setChecked(true);
@@ -291,9 +275,6 @@ public class MenuActivity extends Activity {
 		if(toggle.isChecked()) {
 			Log.i("MenuActivity", "onRangingToggleButtonClicked off to on");
 			Intent intent = new Intent(this, BackgroundRangingService.class);
-			
-			intent.putExtra("lati", lati);
-			intent.putExtra("longi", longi);
 			//Log.i("MenuActivity", "lati"+lati+", longi"+longi);
 			startService(intent);
 			//stopService(new Intent(this, Noselect_BackgroundRangingService.class));
@@ -401,4 +382,5 @@ public class MenuActivity extends Activity {
 			e.printStackTrace();
 		}
 	}
+
 }
