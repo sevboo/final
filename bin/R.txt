@@ -240,8 +240,11 @@ int drawable bold 0x7f020059
 int drawable hongik 0x7f02005a
 int drawable ic_launcher 0x7f02005b
 int drawable line 0x7f02005c
-int drawable my_rounded_corner 0x7f02005d
-int drawable popup_background 0x7f02005e
+int drawable login_logo 0x7f02005d
+int drawable login_logo2 0x7f02005e
+int drawable my_rounded_corner 0x7f02005f
+int drawable ok_button 0x7f020060
+int drawable popup_background 0x7f020061
 int id CancleBtn 0x7f050065
 int id EditUserEmail 0x7f050069
 int id EditUserPW 0x7f050067

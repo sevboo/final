@@ -239,9 +239,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10px"
-            android:layout_weight="1" 
-            android:textSize="40px"
-            android:text="가입하기" />
+            android:layout_weight="1"
+            android:background="@drawable/joinus_button"
+            android:textSize="40px" />
         
     </LinearLayout>
     

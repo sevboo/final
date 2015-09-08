@@ -59,11 +59,11 @@
 
     <Button
         android:id="@+id/idFindButton"
-        android:layout_width="wrap_content"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_gravity="center"
-        android:text="회원번호 찾기" />
+        android:layout_marginTop="20dp"
+        android:background="@drawable/findID_button" />
 
     <ImageView
         android:id="@+id/imageView1"
@@ -139,10 +139,10 @@
 
     <Button
         android:id="@+id/pwFindButton"
-        android:layout_width="wrap_content"
+        android:layout_width="126dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_gravity="center"
-        android:text="비밀번호 찾기" />
+        android:layout_marginTop="20dp"
+        android:background="@drawable/findPW_button" />
 
 </LinearLayout>

@@ -4,14 +4,12 @@
     android:orientation="vertical"
     android:background="#E1F5FE" >
 
-    <TextView
-        android:id="@+id/mdiv_list"
+    <ImageView
+        android:id="@+id/imageView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.50"
-        android:gravity="center"
-        android:text="LOGIN"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_weight="1.46"
+        android:src="@drawable/login_logo2" />
 
     <EditText
         android:id="@+id/inID"
@@ -51,21 +49,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="ID/PW 찾기" />
+            android:background="@drawable/findidpw_button" />
 
         <Button
             android:id="@+id/btnNewJoin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="회원 가입" />
+            android:background="@drawable/join_button" />
 
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="로그인" />
+            android:background="@drawable/login_button" />
 
     </LinearLayout>
 

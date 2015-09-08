@@ -113,13 +113,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:background="@drawable/ok_button"
         android:paddingLeft="40dp"
-        android:paddingRight="40dp"
-        android:text="확인" />
-
-		
-
-
+        android:paddingRight="40dp" />
         
     </LinearLayout>
 
