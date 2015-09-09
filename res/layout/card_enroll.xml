@@ -1,117 +1,118 @@
-<FrameLayout android:layout_width="fill_parent"
-    android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:background="#E1F5FE">
 
     <TextView
-        android:id="@+id/mdiv_list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="#99ccff"
-        android:text="" />
+        android:id="@+id/time_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="신용카드 번호"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-   	<LinearLayout
-   	    android:layout_width="match_parent"
-   	    android:layout_height="match_parent"
-   	    android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
 
-   	    <TextView
-   	        android:id="@+id/time_list"
-   	        android:layout_width="match_parent"
-   	        android:layout_height="wrap_content"
-   	        android:layout_marginTop="10dp"
-   	        android:gravity="center"
-   	        android:text="신용카드 번호"
-   	        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <EditText
+            android:id="@+id/cardNum1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/round"
+            android:ems="10" />
 
-   	    <LinearLayout
-   	        android:layout_width="match_parent"
-   	        android:layout_height="wrap_content"
-   	        android:layout_marginTop="10dp" >
+        <EditText
+            android:id="@+id/cardNum2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/round"
+            android:ems="10" />
 
-   	        <EditText
-   	            android:id="@+id/cardNum1"
-   	            android:layout_width="wrap_content"
-   	            android:layout_height="wrap_content"
-   	            android:layout_weight="1"
-   	            android:ems="10" />
+        <EditText
+            android:id="@+id/cardNum3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/round"
+            android:ems="10" />
 
-   	        <EditText
-   	            android:id="@+id/cardNum2"
-   	            android:layout_width="wrap_content"
-   	            android:layout_height="wrap_content"
-   	            android:layout_weight="1"
-   	            android:ems="10" />
+        <EditText
+            android:id="@+id/cardNum4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/round"
+            android:ems="10" />
+    </LinearLayout>
 
-   	        <EditText
-   	            android:id="@+id/cardNum3"
-   	            android:layout_width="wrap_content"
-   	            android:layout_height="wrap_content"
-   	            android:layout_weight="1"
-   	            android:ems="10" />
+    <TextView
+        android:id="@+id/jan_use"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="유효기간"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-   	        <EditText
-   	            android:id="@+id/cardNum4"
-   	            android:layout_width="wrap_content"
-   	            android:layout_height="wrap_content"
-   	            android:layout_weight="1"
-   	            android:ems="10" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:paddingLeft="15dp" >
 
-   	            <requestFocus />
-   	        </EditText>
-   	    </LinearLayout>
+        <EditText
+            android:id="@+id/expirationDateMonth"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/round"
+            android:ems="10" />
 
-   	    <TextView
-   	        android:id="@+id/jan_use"
-   	        android:layout_width="match_parent"
-   	        android:layout_height="wrap_content"
-   	        android:layout_marginTop="20dp"
-   	        android:gravity="center"
-   	        android:text="유효기간"
-   	        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:id="@+id/mpay_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="월" />
 
-   	    <LinearLayout
-   	        android:layout_width="match_parent"
-   	        android:layout_height="wrap_content"
-   	        android:layout_marginTop="10dp"
-   	        android:gravity="center"
-   	        android:paddingLeft="15dp" >
+        <EditText
+            android:id="@+id/expirationDateYear"
+            android:layout_width="89dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/round"
+            android:ems="10" />
 
-   	        <EditText
-   	            android:id="@+id/expirationDateMonth"
-   	            android:layout_width="56dp"
-   	            android:layout_height="wrap_content"
-   	            android:layout_weight="1"
-   	            android:ems="10" />
+        <TextView
+            android:id="@+id/feb_use"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="년" />
+    </LinearLayout>
 
-   	        <TextView
-   	            android:id="@+id/mpay_list"
-   	            android:layout_width="wrap_content"
-   	            android:layout_height="wrap_content"
-   	            android:layout_weight="1"
-   	            android:text="월" />
+    <Button
+        android:id="@+id/cardModifyButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/ok" />
 
-   	        <EditText
-   	            android:id="@+id/expirationDateYear"
-   	            android:layout_width="89dp"
-   	            android:layout_height="wrap_content"
-   	            android:layout_weight="1"
-   	            android:ems="10" />
-
-   	        <TextView
-   	            android:id="@+id/feb_use"
-   	            android:layout_width="wrap_content"
-   	            android:layout_height="wrap_content"
-   	            android:layout_weight="1"
-   	            android:text="년" />
-   	    </LinearLayout>
-
-   	    <Button
-   	        android:id="@+id/cardModifyButton"
-   	        android:layout_width="100dp"
-   	        android:layout_height="100dp"
-   	        android:layout_gravity="center"
-   	        android:layout_marginTop="20dp"
-   	        android:background="@drawable/ok" />
-
-   	</LinearLayout>
-
-</FrameLayout>
+</LinearLayout>

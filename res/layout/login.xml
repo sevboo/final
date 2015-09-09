@@ -13,20 +13,26 @@
 
     <EditText
         android:id="@+id/inID"
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="회원 번호"
-        android:ems="10" >
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/round"
+        android:ems="10"
+        android:hint="회원 번호" >
 
         <requestFocus />
     </EditText>
 
     <EditText
         android:id="@+id/inPW"
-        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/round"
         android:ems="10"
         android:hint="비밀번호"
         android:inputType="textPassword" />

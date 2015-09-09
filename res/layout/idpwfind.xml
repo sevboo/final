@@ -1,8 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<LinearLayout android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#E1F5FE"
-    android:orientation="vertical" >
+    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
         android:id="@+id/mdiv_list"
@@ -27,7 +26,10 @@
             android:id="@+id/userEmail_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
+            android:background="@drawable/round"
             android:ems="20"
             android:inputType="textEmailAddress" >
 
@@ -50,9 +52,13 @@
             android:id="@+id/userName_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
+            android:background="@drawable/round"
             android:ems="20"
             android:inputType="textPersonName" />
+
     </LinearLayout>
 
     <Button
@@ -60,7 +66,6 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
         android:layout_weight="0.00"
         android:background="@drawable/findid" />
 
@@ -86,7 +91,10 @@
             android:id="@+id/userID_pw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
+            android:background="@drawable/round"
             android:ems="20" >
 
             <requestFocus />
@@ -108,9 +116,13 @@
             android:id="@+id/userEmail_pw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
+            android:background="@drawable/round"
             android:ems="20"
             android:inputType="textEmailAddress" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -128,9 +140,13 @@
             android:id="@+id/ssNum_pw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
+            android:background="@drawable/round"
             android:ems="10"
             android:inputType="number" />
+
     </LinearLayout>
 
     <Button
@@ -138,7 +154,6 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
         android:layout_weight="0.01"
         android:background="@drawable/findpw" />
 

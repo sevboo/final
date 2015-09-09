@@ -1,8 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<LinearLayout android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" 
-    android:background="#E1F5FE">
+    android:background="#E1F5FE" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,9 +26,12 @@
             android:id="@+id/UserNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5px"
-            android:editable="false"
-            android:layout_weight="1" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/round"
+            android:editable="false" />
+
     </LinearLayout>
     
     <LinearLayout
@@ -47,11 +49,15 @@
             android:id="@+id/UserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5px"
-            android:layout_weight="1" 
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/round"
+            android:hint="영어이름을 써주세요"
             android:imeOptions="actionNext"
-            android:inputType="text"
-            android:hint="영어이름을 써주세요"/>
+            android:inputType="text" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -69,10 +75,14 @@
             android:id="@+id/UserPW"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5px"
-            android:layout_weight="1" 
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/round"
             android:imeOptions="actionNext"
-            android:inputType="text"/>
+            android:inputType="text" />
+
     </LinearLayout>
     
     <LinearLayout
@@ -99,9 +109,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="5px"
             android:layout_weight="1"
+            android:background="@drawable/round"
+            android:hint="ex)1990"
             android:imeOptions="actionNext"
-            android:hint="ex)1990" 
-            android:inputType="text"/>
+            android:inputType="text" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -114,10 +126,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
-            android:layout_weight="1" 
-            android:imeOptions="actionNext"
+            android:layout_weight="1"
+            android:background="@drawable/round"
             android:hint="ex)01~12"
-            android:inputType="text"/>
+            android:imeOptions="actionNext"
+            android:inputType="text" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -130,10 +144,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
-            android:layout_weight="1" 
-            android:imeOptions="actionNext"
+            android:layout_weight="1"
+            android:background="@drawable/round"
             android:hint="ex)01~31"
-            android:inputType="text"/>
+            android:imeOptions="actionNext"
+            android:inputType="text" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -158,11 +174,15 @@
             android:id="@+id/UserPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5px"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:imeOptions="actionNext" 
+            android:background="@drawable/round"
             android:hint="-없이 입력하세요"
-            android:inputType="text"/>
+            android:imeOptions="actionNext"
+            android:inputType="text" />
+
     </LinearLayout>
     
     <LinearLayout
@@ -180,10 +200,14 @@
             android:id="@+id/UserEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5px"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:imeOptions="actionNext" 
-            android:inputType="text"/>
+            android:background="@drawable/round"
+            android:imeOptions="actionNext"
+            android:inputType="text" />
+
     </LinearLayout>
     
     <LinearLayout
@@ -201,11 +225,15 @@
             android:id="@+id/UserCardNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5px"
-            android:layout_weight="1" 
-            android:imeOptions="actionNext"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/round"
             android:hint="모든 숫자를 이어서 입력하세요"
-            android:inputType="text"/>
+            android:imeOptions="actionNext"
+            android:inputType="text" />
+
     </LinearLayout>
     
     <LinearLayout
@@ -223,11 +251,15 @@
             android:id="@+id/UserCardExp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5px"
-            android:layout_weight="1" 
-            android:imeOptions="actionDone" 
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/round"
             android:hint="ex)월일 이어서 입력하세요"
-            android:inputType="text"/>
+            android:imeOptions="actionDone"
+            android:inputType="text" />
+
     </LinearLayout>
     
     <LinearLayout
