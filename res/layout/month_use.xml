@@ -18,10 +18,10 @@
 
         <Button
             android:id="@+id/inquiryBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
-            android:background="@drawable/find_button"
+            android:background="@drawable/find"
             android:onClick="onClick" />
 
     </LinearLayout>

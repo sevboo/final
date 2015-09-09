@@ -1,21 +1,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" 
-    android:background="#E1F5FE">
+    android:background="#E1F5FE"
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/mdiv_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="40dp"
-        android:text="ID/PW 찾기" />
-    
+        android:text="ID/PW 찾기"
+        android:textSize="40dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:layout_marginTop="20dp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" >
 
         <TextView
             android:id="@+id/time_list"
@@ -28,12 +28,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="textEmailAddress"
-            android:ems="20" >
+            android:ems="20"
+            android:inputType="textEmailAddress" >
 
             <requestFocus />
         </EditText>
-
     </LinearLayout>
 
     <LinearLayout
@@ -54,16 +53,16 @@
             android:layout_weight="1"
             android:ems="20"
             android:inputType="textPersonName" />
-
     </LinearLayout>
 
     <Button
         android:id="@+id/idFindButton"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:background="@drawable/findID_button" />
+        android:layout_weight="0.00"
+        android:background="@drawable/findid" />
 
     <ImageView
         android:id="@+id/imageView1"
@@ -74,8 +73,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:layout_marginTop="20dp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" >
 
         <TextView
             android:id="@+id/textView4"
@@ -92,7 +91,6 @@
 
             <requestFocus />
         </EditText>
-
     </LinearLayout>
 
     <LinearLayout
@@ -113,7 +111,6 @@
             android:layout_weight="1"
             android:ems="20"
             android:inputType="textEmailAddress" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -134,15 +131,15 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="number" />
-
     </LinearLayout>
 
     <Button
         android:id="@+id/pwFindButton"
-        android:layout_width="126dp"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:background="@drawable/findPW_button" />
+        android:layout_weight="0.01"
+        android:background="@drawable/findpw" />
 
 </LinearLayout>

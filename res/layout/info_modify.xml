@@ -6,10 +6,10 @@
 
     <Button
         android:id="@+id/CancleBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_marginTop="10px"
-        android:background="@drawable/cancel_button"
+        android:background="@drawable/cancel"
         android:textSize="20px" />
 
     <TextView
@@ -97,22 +97,13 @@
             android:layout_weight="1" />
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/RelativeLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp" >
-
-        <Button
-            android:id="@+id/ModifyBtn"
-            android:layout_width="211dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/ok_button"
-            android:gravity="center"
-            android:textSize="20px" />
-
-    </RelativeLayout>
+    <Button
+        android:id="@+id/ModifyBtn"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:background="@drawable/ok"
+        android:gravity="center"
+        android:textSize="20px" />
 
 </LinearLayout>

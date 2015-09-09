@@ -65,7 +65,7 @@ public class MainActivity extends FragmentActivity {
 		btnLogin = (Button) findViewById(R.id.btnLogin);
 		btnFind = (Button) findViewById(R.id.btnFind);
 		btnNewjoin = (Button) findViewById(R.id.btnNewJoin);
-		autoLogin = (CheckBox)findViewById(R.id.autologin);		
+		autoLogin = (CheckBox)findViewById(R.id.autologin);	
 		//자동로그인 관련
 		setting = getSharedPreferences("setting", 0);
 		editor= setting.edit();

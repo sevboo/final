@@ -8,8 +8,8 @@
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1.46"
-        android:src="@drawable/login_logo2" />
+        android:layout_weight="0.81"
+        android:src="@drawable/login_logo" />
 
     <EditText
         android:id="@+id/inID"
@@ -39,6 +39,8 @@
         android:layout_weight="0.50" 
         android:text="자동 로그인" />
 
+    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,24 +48,25 @@
 
         <Button
             android:id="@+id/btnFind"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_weight="1"
-            android:background="@drawable/findidpw_button" />
+            android:background="@drawable/findidpw" />
 
         <Button
             android:id="@+id/btnNewJoin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_weight="1"
-            android:background="@drawable/join_button" />
+            android:background="@drawable/join" />
 
         <Button
             android:id="@+id/btnLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MyActionBar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_weight="1"
-            android:background="@drawable/login_button" />
+            android:background="@drawable/login" />
 
     </LinearLayout>
 

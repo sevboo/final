@@ -98,6 +98,11 @@ public class MenuActivity extends Activity{
 		
         textCustomId.setText("회원번호   "+memInfoArray[0]);
         
+        //php를 걸쳐서 미결제 금액도 표시해줘야함
+        NonPayData();
+        textSumCharge.setText(result+"원");
+        
+        
         //background 서비스 시작
         intent = new Intent(this, BackgroundRangingService.class);
 
@@ -106,9 +111,6 @@ public class MenuActivity extends Activity{
         // preparing list data
         prepareListData();
         
-        //php를 걸쳐서 미결제 금액도 표시해줘야함
-        NonPayData();
-        textSumCharge.setText(result+"원");
         
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
  
@@ -324,7 +326,7 @@ public class MenuActivity extends Activity{
 			// buffer:php로 보낼 구문
 			StringBuffer buffer = new StringBuffer();
 			buffer.append("mem_id="+memInfoArray[0]);
-
+			Log.i("HttpPost","id:"+buffer.toString());
 			// php로 보내기
 			PrintWriter writer = new PrintWriter(new OutputStreamWriter(
 					connection.getOutputStream(), "EUC-KR"));

@@ -1080,14 +1080,22 @@ containing a value of this type.
         public static final int app=0x7f020057;
         public static final int app_name=0x7f020058;
         public static final int bold=0x7f020059;
-        public static final int hongik=0x7f02005a;
-        public static final int ic_launcher=0x7f02005b;
-        public static final int line=0x7f02005c;
-        public static final int login_logo=0x7f02005d;
-        public static final int login_logo2=0x7f02005e;
-        public static final int my_rounded_corner=0x7f02005f;
-        public static final int ok_button=0x7f020060;
-        public static final int popup_background=0x7f020061;
+        public static final int cancel=0x7f02005a;
+        public static final int find=0x7f02005b;
+        public static final int findid=0x7f02005c;
+        public static final int findidpw=0x7f02005d;
+        public static final int findpw=0x7f02005e;
+        public static final int hongik=0x7f02005f;
+        public static final int ic_launcher=0x7f020060;
+        public static final int join=0x7f020061;
+        public static final int joinus=0x7f020062;
+        public static final int line=0x7f020063;
+        public static final int login=0x7f020064;
+        public static final int login_logo=0x7f020065;
+        public static final int logout=0x7f020066;
+        public static final int my_rounded_corner=0x7f020067;
+        public static final int ok=0x7f020068;
+        public static final int popup_background=0x7f020069;
     }
     public static final class id {
         public static final int CancleBtn=0x7f050065;
@@ -1095,9 +1103,9 @@ containing a value of this type.
         public static final int EditUserPW=0x7f050067;
         public static final int EditUserPhone=0x7f050068;
         public static final int JoinBtn=0x7f050075;
+        public static final int LinearLayout1=0x7f050090;
         public static final int ModifyBtn=0x7f05006a;
         public static final int ProximityUuid=0x7f05003e;
-        public static final int RelativeLayout1=0x7f050090;
         public static final int UserBirthDay=0x7f050070;
         public static final int UserBirthMonth=0x7f05006f;
         public static final int UserBirthYear=0x7f05006e;
