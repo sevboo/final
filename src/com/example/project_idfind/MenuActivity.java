@@ -62,7 +62,7 @@ public class MenuActivity extends Activity{
     Switch switch1;
 
 	StringBuilder builder;
-	String result;
+	static String non_pay_result;
 	
 	private BluetoothManager mBluetoothManager;
 	private BluetoothAdapter mBluetoothAdapter;
@@ -100,7 +100,7 @@ public class MenuActivity extends Activity{
         
         //php를 걸쳐서 미결제 금액도 표시해줘야함
         NonPayData();
-        textSumCharge.setText(result+"원");
+        textSumCharge.setText(non_pay_result+"원");
         
         
         //background 서비스 시작
@@ -182,8 +182,9 @@ public class MenuActivity extends Activity{
                 	}
                 }else if(groupPosition == 1 ){
                 	if(childPosition == 0){
-                		intent = new Intent(MenuActivity.this, PayUse.class); //결제 내역
                 		intent = new Intent(MenuActivity.this, PayActivity.class); //결제하기
+                	}else if(childPosition == 1){
+                		intent = new Intent(MenuActivity.this, PayUse.class); //결제 내역
                 	}
                 }else if(groupPosition == 2 ){
                 	if(childPosition == 0){
@@ -255,6 +256,7 @@ public class MenuActivity extends Activity{
         myInfo.add("카드 등록 및 수정");
  
         List<String> buyList = new ArrayList<String>();
+        buyList.add("결제하기");
         buyList.add("결제 내역");
         
         List<String> useList = new ArrayList<String>();
@@ -340,10 +342,10 @@ public class MenuActivity extends Activity{
 			while ((resultStr = reader.readLine()) != null) {
 				builder = new StringBuilder();
 				builder.append(resultStr);
-				result = builder.toString();
+				non_pay_result = builder.toString();
 			}
 			
-			Log.i("HttpPost","php:"+result);
+			Log.i("HttpPost","php:"+non_pay_result);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

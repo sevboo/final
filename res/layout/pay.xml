@@ -2,7 +2,90 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E1F5FE"
     android:orientation="vertical" >
-    
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="10dp" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#ccffff"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="실시간 요금 조회" />
+
+            <TextView
+                android:id="@+id/view_payuse"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:background="#cccc99"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="요금"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/payActivityBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.91"
+            android:text="결제" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/pay_div_list"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="#E1F5FE"
+            android:gravity="center"
+            android:text="승하차" />
+
+        <TextView
+            android:id="@+id/pay_time_list"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="#E1F5FE"
+            android:gravity="center"
+            android:text="시간" />
+
+        <TextView
+            android:id="@+id/pay_charge_list"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="#E1F5FE"
+            android:gravity="center"
+            android:text="요금" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/pay_use"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
+    </ListView>
 
 </LinearLayout>

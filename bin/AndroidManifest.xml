@@ -49,7 +49,8 @@
         <activity android:name="RecentUse"></activity>
         <activity android:name="RangingActivity" /> 
         <activity android:name="StartActivity"></activity>
-        <activity android:name="PopupActivity" android:theme="@android:style/Theme.Dialog"></activity>      
+        <activity android:name="PopupActivity" android:theme="@android:style/Theme.Dialog"></activity>
+        <activity android:name="PayActivity"></activity>      
     </application>
 
 </manifest>
