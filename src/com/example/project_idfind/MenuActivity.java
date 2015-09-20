@@ -128,7 +128,7 @@ public class MenuActivity extends Activity{
 				finish();
 			}
 		});
- 
+        
         // Listview Group click listener
         expListView.setOnGroupClickListener(new OnGroupClickListener() {
  
@@ -285,6 +285,7 @@ public class MenuActivity extends Activity{
 		} else {
 			Log.i("MenuActivity", "onRangingToggleButtonClicked on to off");
 			stopService(new Intent(this, BackgroundRangingService.class));
+			stopService(new Intent(this, BackgroundMonitoringService.class));
 			//startService(new Intent(this,Noselect_BackgroundRangingService.class));
 		}
 	}

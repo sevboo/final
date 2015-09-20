@@ -2,6 +2,7 @@ package com.example.project_idfind;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.StringTokenizer;
 
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -63,8 +64,10 @@ public class RangingActivity extends RecoActivity implements RECORangingListener
 		Log.i("RECORangingActivity", "didRangeBeaconsInRegion() region: " + recoRegion.getUniqueIdentifier() + ", number of beacons ranged: " + recoBeacons.size());
 		mRangingListAdapter.updateAllBeacons(recoBeacons);
 		mRangingListAdapter.notifyDataSetChanged();
+		
 		//Write the code when the beacons in the region is received
 	}
+	
 		@Override
 	protected void start(ArrayList<RECOBeaconRegion> regions) {		
 		for(RECOBeaconRegion region : regions) {

@@ -34,6 +34,7 @@ import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.BigTextStyle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.perples.recosdk.RECOBeacon;
 import com.perples.recosdk.RECOBeaconManager;
@@ -44,19 +45,20 @@ import com.perples.recosdk.RECOMonitoringListener;
 import com.perples.recosdk.RECORangingListener;
 import com.perples.recosdk.RECOServiceConnectListener;
 
+import com.example.project_idfind.BackgroundMonitoringService;
 import com.example.project_idfind.GpsInfo;
 
 public class BackgroundRangingService extends Service implements
 		RECOMonitoringListener, RECORangingListener, RECOServiceConnectListener {
 	StringBuilder builder;
-	String result1,result2;
+	String result1,result2,lastmajor;
 	String [] result_arr1 = new String[4];
 	String [] result_arr2 = new String[4];
 	GpsInfo gps;
 	
 	String now_time,now_time2;
 
-	private long mScanDuration = (1 / 2) * 1000L;
+	private long mScanDuration = 1000L;
 	private long mSleepDuration = (1 / 4) * 1000L;
 	private long mRegionExpirationTime = 3 * 1000L;
 	private int mNotificationID = 9999;
@@ -242,11 +244,13 @@ public class BackgroundRangingService extends Service implements
 	public void didExitRegion(RECOBeaconRegion region) {
 		Log.i("RECOBackgroundRangingService",
 				"didExitRegion() - " + region.getUniqueIdentifier());
-		// this.popupNotification("Outside of " + region.getUniqueIdentifier());
+		
+	    //this.popupNotification("버스하차정보","Major:"+region.getMajor());
 		// Write the code when the device is exit the region
-
+	    ///Toast.makeText(getApplicationContext(), "bus off 되었습니다.",Toast.LENGTH_LONG).show();
 		this.stopRangingWithRegion(region); // stop ranging because the device
 											// is outside of the region from now
+		
 	}
 
 	@Override
@@ -264,7 +268,7 @@ public class BackgroundRangingService extends Service implements
 			RECOBeaconRegion region) {
 		Log.i("RECOBackgroundRangingService", "didRangeBeaconsInRegion() - "
 				+ region.getUniqueIdentifier() + " with " + beacons.size()
-				+ " beacons");
+				+ " beacons count:"+count);
 		mRangingAdapter = new RangingListAdapter(this);
 		mRangingAdapter.updateAllBeacons(beacons);
 		mRangingAdapter.notifyDataSetChanged();
@@ -304,63 +308,26 @@ public class BackgroundRangingService extends Service implements
 					for(int j=0;j<numberOfToken1;j++){
 						result_arr1[j]=tokened1.nextToken();
 					}
-					
-					if(Integer.parseInt(result_arr1[2])==0){
+					//Toast.makeText(getApplicationContext(), "result:"+(Integer.parseInt(result_arr1[2])==0),Toast.LENGTH_LONG).show();
+					Log.i("RECOBackgroundRangingService","result:"+result_arr1[2]+"ok?"+result_arr1[2].equals("0")+"/"+result_arr1[2].equals("1"));
+					if(result_arr1[2].equals("0")){
 						this.popupNotification("하차 정보","시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]+"\n위치:"+lati+","+longi);
 						//this.getMessage("하차 정보", "시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]);
-					}else if (Integer.parseInt(result_arr1[2])==1){
+					}else if (result_arr1[2].equals("1")){
 						this.popupNotification("승차 정보","시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]+"\n위치:"+lati+","+longi);
-						//this.getMessage("승차 정보", "시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]);
-						if(Integer.parseInt(major.substring(0, 1))==1){
-							Log.i("RECOBackgroundRangingService","background() - bus on");
-							while(true){
-								detection=false;
-								for (int k = 0; k < mRangingAdapter.mRangedBeacons.size(); k++) {
-									if (mRangingAdapter.mRangedBeacons.get(k).getMajor() == Integer.parseInt(major)){
-										detection=true;
-									}
-								}
-								if(detection=false){
-									OutputData();
-									StringTokenizer tokened2 = new StringTokenizer(result2,",");
-									int numberOfToken2 = tokened2.countTokens();
-									
-									for(int a=0;a<numberOfToken2;a++){
-										result_arr2[a]=tokened2.nextToken();
-									}
-									this.popupNotification("하차 정보","시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]+"\n위치:"+lati+","+longi);
-									//this.getMessage("하차 정보", "시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]);
-									break;
-								}
-							}
-						}
+						Intent intent = new Intent(this, BackgroundMonitoringService.class);
+						intent.putExtra("major", mRangingAdapter.mRangedBeacons.get(i).getMajor());
+						startService(intent);
 					}else{
 						this.popupNotification("환승 정보","시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]+"\n위치:"+lati+","+longi);
-						//this.getMessage("환승 정보", "시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]);
-						}
-					
-					
-					//this.popupNotification("-60db이상 정보 ","major : "+mRangingAdapter.mRangedBeacons.get(0).getMajor()+
-						//	"\n rssi : "+mRangingAdapter.mRangedBeacons.get(0).getRssi());
-					//count = 100;
-					/*
-					new AlertDialog.Builder(this)
-					.setTitle("크기가 -70db 보다 큰 Beacon의 정보")
-					// x팝업창 타이틀바
-					.setMessage(
-							"major : "+ mRangingAdapter.mRangedBeacons.get(i).getMajor()
-							+ "\nrssi : "+ mRangingAdapter.mRangedBeacons.get(i).getRssi()) // 팝업창 내용
-					.setNeutralButton("닫기",new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dlg, int sumthin) {
-									// 닫기 버튼을 누르면 아무것도 안하고 닫기 때문에 그냥 비움
-								}
-					}).show(); // 팝업창 보여줌
-	                */
-				}
-				else{
+						Intent intent = new Intent(this, BackgroundMonitoringService.class);
+						intent.putExtra("major", mRangingAdapter.mRangedBeacons.get(i).getMajor());
+						startService(intent);
+					}
+					count=0;
+				}else{
 					stopRangingWithRegion(region);
 				}
-				
 			}
 			}catch(IndexOutOfBoundsException e){
 				
@@ -381,7 +348,7 @@ public class BackgroundRangingService extends Service implements
 		
 	}
 	private void popupNotification(String title,String msg) {
-		Log.i("RECOBackgroundRangingService", "popupNotification()");
+		Log.i("RECOBackgroundRangingService", "popupNotification()-"+title);
 		//String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.KOREA).format(new Date());
 		long[] vibrate = {0, 100, 200, 300}; 
 		NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -389,7 +356,7 @@ public class BackgroundRangingService extends Service implements
 		PendingIntent pintent1 = PendingIntent.getActivity(this, 0, intent, 0);
 		
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-		mBuilder.setSmallIcon(R.drawable.ic_launcher);
+		mBuilder.setSmallIcon(R.drawable.app);
 		mBuilder.setContentTitle(title);
 		mBuilder.setContentText(msg);
 		mBuilder.setVibrate(vibrate);
@@ -501,6 +468,7 @@ public class BackgroundRangingService extends Service implements
 
 		}
 	}
+	
 	public void OutputData() {
 		Log.i("RECOBackgroundRangingService", "OutputData");
 		try {
@@ -551,6 +519,54 @@ public class BackgroundRangingService extends Service implements
 			}
 			
 			Log.i("HttpPost","php:"+result2);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+	}
+	
+	public void GetLastMajor() {
+		Log.i("RECOBackgroundRangingService", "OutputData");
+		try {
+			URL url = new URL("https://cic.hongik.ac.kr/b289076/getlastMajor.php");// php 파일수정 필요
+																					
+
+			trustAllHosts(); // ssl socket 적용
+
+			HttpsURLConnection https = (HttpsURLConnection) url
+					.openConnection();
+			https.setHostnameVerifier(new HostnameVerifier() {
+
+				@Override
+				public boolean verify(String hostname, SSLSession session) {
+					return true;
+				}
+			});
+
+			HttpURLConnection connection = https;
+
+			connection.setDefaultUseCaches(false);
+			connection.setDoInput(true);
+			connection.setDoOutput(true);
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("content-type",
+					"application/x-www-form-urlencoded");
+
+			connection.connect();
+			// php에서 받아오기
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					connection.getInputStream(), "EUC-KR"));
+			String resultStr;
+			while ((resultStr = reader.readLine()) != null) {
+				builder = new StringBuilder();
+				builder.append(resultStr);
+				lastmajor = builder.toString();
+			}
+			
+			Log.i("HttpPost","php:"+lastmajor);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

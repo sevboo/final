@@ -38,7 +38,17 @@ public class RangingListAdapter extends BaseAdapter {
 			mRangedBeacons = new ArrayList<RECOBeacon>(beacons);
 		}	
 	}
-	
+	public boolean BeaconDetect(String major){
+		boolean detection;
+		detection=false;
+		for (int k = 0; k < mRangedBeacons.size(); k++) {
+			if (mRangedBeacons.get(k).getMajor() == Integer.parseInt(major)){
+				detection=true;
+			}
+		}
+		//Log.i("RECOBackgroundRangingService","background() - detecting"+detection);
+		return detection;
+	}
 	public void clear() {
 		mRangedBeacons.clear();
 	}
