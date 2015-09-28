@@ -2,9 +2,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E1F5FE"
+    android:background="#ffffff"
     android:orientation="vertical" >
 
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/mdiv_list"
+                android:layout_width="fill_parent"
+                android:layout_height="66dp"
+                android:background="#64B5F6"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="월 사 용 내 역"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ffffff" />
+
+        </FrameLayout>
+    </LinearLayout>
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
@@ -19,17 +48,18 @@
         <Button
             android:id="@+id/inquiryBtn"
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/find"
-            android:onClick="onClick" />
+            android:background="@drawable/button_background"
+            android:onClick="onClick"
+            android:text="조  회"
+            android:textColor="#ffffff" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp" 
-        android:padding="10dp">
+        android:layout_height="40dp" >
 
         <TextView
             android:id="@+id/time_list"

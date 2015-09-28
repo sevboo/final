@@ -3,13 +3,41 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" 
-    android:background="#E1F5FE">
+    android:background="#ffffff">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/mdiv_list"
+                android:layout_width="fill_parent"
+                android:layout_height="66dp"
+                android:background="#64B5F6"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="카 드 정 보 수 정"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ffffff" />
+
+        </FrameLayout>
+    </LinearLayout>
+    
     <TextView
         android:id="@+id/time_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="신용카드 번호"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -17,7 +45,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" >
+        android:layout_marginTop="20dp" >
 
         <EditText
             android:id="@+id/cardNum1"
@@ -70,7 +98,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:paddingLeft="15dp" >
 
@@ -90,14 +118,25 @@
             android:layout_weight="1"
             android:text="월" />
 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="          " />
+
         <EditText
             android:id="@+id/expirationDateYear"
             android:layout_width="89dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/round"
-            android:ems="10" />
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
 
         <TextView
             android:id="@+id/feb_use"
@@ -109,10 +148,12 @@
 
     <Button
         android:id="@+id/cardModifyButton"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="141dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/ok" />
+        android:layout_marginTop="30dp"
+        android:background="@drawable/button_background"
+        android:text="확   인"
+        android:textColor="#ffffff" />
 
 </LinearLayout>

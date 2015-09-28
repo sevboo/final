@@ -1,33 +1,58 @@
 <LinearLayout android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#E1F5FE"
+    android:background="#ffffff"
     android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <Button
-        android:id="@+id/CancleBtn"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="10px"
-        android:background="@drawable/cancel"
-        android:textSize="20px" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="30px"
-        android:text="회원 정보 수정"
-        android:textSize="40px" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/mdiv_list"
+                android:layout_width="fill_parent"
+                android:layout_height="66dp"
+                android:background="#64B5F6"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="회 원 정 보 수 정"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/CancleBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/button_background"
+                android:text="취 소"
+                android:textColor="#ffffff"
+                android:textSize="20px" />
+
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20px"
             android:layout_marginTop="5px"
+            android:layout_weight="0.19"
             android:text="이름" />
 
         <TextView
@@ -35,17 +60,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="" />
+            android:layout_margin="5dp"
+            android:layout_weight="0.75"
+            android:text="aaa" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20px"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="5px"
             android:text="비밀번호" />
 
@@ -53,23 +83,24 @@
             android:id="@+id/EditUserPW"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_margin="5dp"
+            android:layout_marginLeft="12dp"
             android:layout_marginRight="10dp"
-            android:layout_weight="1"
             android:background="@drawable/round"
             android:ems="10"
             android:inputType="textPassword" />
-
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20px"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="5px"
             android:text="핸드폰 번호" />
 
@@ -77,30 +108,33 @@
             android:id="@+id/EditUserPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5px"
+            android:layout_margin="5dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_weight="1"
+            android:layout_weight="0.67"
             android:background="@drawable/round" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20px"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="5px"
+            android:layout_weight="0.15"
             android:text="이메일" />
 
         <EditText
             android:id="@+id/EditUserEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5px"
+            android:layout_margin="5dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
@@ -111,10 +145,13 @@
     <Button
         android:id="@+id/ModifyBtn"
         android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="40dp"
         android:layout_gravity="center"
-        android:background="@drawable/ok"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/button_background"
         android:gravity="center"
+        android:text="확   인"
+        android:textColor="#ffffff"
         android:textSize="20px" />
 
 </LinearLayout>

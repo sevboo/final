@@ -1,8 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<LinearLayout android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="#E1F5FE" >
+    android:background="#ffffff"
+    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,25 +15,27 @@
             <TextView
                 android:id="@+id/mdiv_list"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:background="#BBDEFB"
+                android:layout_height="66dp"
+                android:background="#64B5F6"
                 android:text="" />
 
             <Button
                 android:id="@+id/logoutBtn"
-                android:layout_width="48dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:background="@drawable/logout"
-                android:textColor="#000000" />
+                android:layout_width="88dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/button_background"
+                android:text="로그아웃"
+                android:textColor="#ffffff"
+                android:textSize="15sp" />
 
         </FrameLayout>
-
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="232dp"
         android:orientation="vertical"
         android:paddingBottom="20dp"
         android:paddingLeft="20dp"
@@ -45,6 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
+            android:layout_marginTop="20dp"
             android:text="승/하차 팝업 서비스" />
 
         <ToggleButton
@@ -52,47 +54,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
+            android:layout_marginTop="10dp"
             android:onClick="onRangingToggleButtonClicked"
             android:text="승/하차 팝업 서비스" />
 
         <TextView
             android:id="@+id/textCustomId"
-            android:layout_width="149dp"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/my_rounded_corner"
-            android:textSize="15dp" />
+            android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/mpay_list"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="미결제 누적금액"
-            android:textSize="20dp"
-            android:background="@drawable/my_rounded_corner"/>
-
-        <TextView
-            android:id="@+id/textSumCharge"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="10000원"
-            android:textSize="20dp" 
-            android:background="#64B5F6"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <ExpandableListView
-            android:id="@+id/lvExp"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#BBDEFB" >
+            android:layout_height="wrap_content"
+            android:background="@drawable/my_rounded_corner2"
+            android:orientation="vertical" >
 
-        </ExpandableListView>
-   
+            <TextView
+                android:id="@+id/mpay_list"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="미결제 누적금액"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/textSumCharge"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="10000원"
+                android:textSize="20dp" />
+        </LinearLayout>
+
     </LinearLayout>
+        
+	<android.support.v4.view.ViewPager
+		android:id="@id/viewpager"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+        
 
 </LinearLayout>

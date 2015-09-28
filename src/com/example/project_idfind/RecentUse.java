@@ -60,11 +60,11 @@ public class RecentUse extends ActionBarActivity {
 		}
 		for (int i = 0; i < result_array.size(); i++) {
 			String temp_div=recentInfo[i][0];
-			if(temp_div.equalsIgnoreCase("0")){
+			if(temp_div.equals("0")){
 				temp_use = new use_info("ÇÏÂ÷",recentInfo[i][1],recentInfo[i][2]);
-			}else if(temp_div.equalsIgnoreCase("1")){
+			}else if(temp_div.equals("1")){
 				temp_use = new use_info("½ÂÂ÷",recentInfo[i][1],recentInfo[i][2]);
-			}else if(temp_div.equalsIgnoreCase("2")){
+			}else if(temp_div.equals("2")){
 				temp_use = new use_info("È¯½Â",recentInfo[i][1],recentInfo[i][2]);
 			}
 			UseAdapter.use_list.add(temp_use);

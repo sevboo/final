@@ -36,7 +36,7 @@ import android.widget.Toast;
 public class MainActivity extends FragmentActivity {
 	EditText ID,Password;
 	Button btnLogin,btnFind,btnNewjoin;
-	CheckBox autoLogin;
+	CheckBox autoLogin,idSave;
 	String mem_id,mem_pwd;
 	Intent intent;
 	StringBuilder builder;
@@ -66,6 +66,7 @@ public class MainActivity extends FragmentActivity {
 		btnFind = (Button) findViewById(R.id.btnFind);
 		btnNewjoin = (Button) findViewById(R.id.btnNewJoin);
 		autoLogin = (CheckBox)findViewById(R.id.autologin);	
+		idSave = (CheckBox)findViewById(R.id.idsave);
 		//자동로그인 관련
 		setting = getSharedPreferences("setting", 0);
 		editor= setting.edit();
@@ -157,6 +158,23 @@ public class MainActivity extends FragmentActivity {
 			}
 		});
 		
+		idSave.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				// TODO Auto-generated method stub
+				if(isChecked){
+					String Id = ID.getText().toString();
+					
+					editor.putString("Id", Id);
+					editor.putBoolean("Id_Save_enabled", true);
+					editor.commit();
+				}else{
+					editor.clear();
+					editor.commit();
+				}
+			}
+		});
+		
 		//자동로그인 체크여부-yes일때
 		if(setting.getBoolean("Auto_Login_enabled", false)){
 			Intent getintent = getIntent();
@@ -175,6 +193,22 @@ public class MainActivity extends FragmentActivity {
 				//btnLogin.performClick();
 	        }	
 		}
+		if(setting.getBoolean("Id_Save_enabled", false)){
+			Intent getintent = getIntent();
+	        String button_onoff_div = "0";
+
+	        //Toast.makeText(getApplicationContext(), getintent.getExtras().getString("login_button_div"), Toast.LENGTH_LONG).show();
+	        if(getintent.getExtras()==null){
+	        	ID.setText(setting.getString("Id", ""));
+				idSave.setChecked(true);
+
+	        }else{
+	        	ID.setText(setting.getString("Id", ""));
+				idSave.setChecked(true);
+				//btnLogin.performClick();
+	        }	
+		}
+		
     }
     
     public void HttpPostData(){

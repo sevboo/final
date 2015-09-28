@@ -20,35 +20,32 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ExpandableListView.OnGroupClickListener;
-import android.widget.ExpandableListView.OnGroupCollapseListener;
-import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
  
-public class MenuActivity extends Activity{
+public class MenuActivity extends FragmentActivity {
 	
 	Button logoutBtn;
     ExpandableListAdapter listAdapter;
@@ -68,13 +65,18 @@ public class MenuActivity extends Activity{
 	private BluetoothAdapter mBluetoothAdapter;
 	private static final int REQUEST_ENABLE_BT = 1;
 	
+	int MAX_PAGE=2;
+	Fragment cur_fragment=new Fragment();
 	@SuppressLint("NewApi")@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
         
+        ViewPager viewPager=(ViewPager)findViewById(R.id.viewpager); 
+        viewPager.setAdapter(new adapter(getApplicationContext()));
+        
         // get the listview
-        expListView = (ExpandableListView) findViewById(R.id.lvExp);
+        //expListView = (ExpandableListView) findViewById(R.id.lvExp);
         logoutBtn = (Button) findViewById(R.id.logoutBtn);
         textCustomId = (TextView) findViewById(R.id.textCustomId);
         textSumCharge = (TextView) findViewById(R.id.textSumCharge);
@@ -115,7 +117,7 @@ public class MenuActivity extends Activity{
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
  
         // setting list adapter
-        expListView.setAdapter(listAdapter);
+        //expListView.setAdapter(listAdapter);
         
         logoutBtn.setOnClickListener(new OnClickListener() {
 			
@@ -129,8 +131,9 @@ public class MenuActivity extends Activity{
 			}
 		});
         
+	}
         // Listview Group click listener
-        expListView.setOnGroupClickListener(new OnGroupClickListener() {
+        /*expListView.setOnGroupClickListener(new OnGroupClickListener() {
  
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v,
@@ -206,7 +209,7 @@ public class MenuActivity extends Activity{
                 return false;
             }
         });
-    }
+    }*/
     /*
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -387,5 +390,91 @@ public class MenuActivity extends Activity{
 			e.printStackTrace();
 		}
 	}
+    
+    private class adapter extends PagerAdapter {
+    	private LayoutInflater mInflater;
+		public adapter(Context c) {
+			super();
+			mInflater=LayoutInflater.from(c);
+			// TODO Auto-generated constructor stub
+		}
+		/*
+		@Override
+		public Fragment getItem(int position) {
+			if(position<0 || MAX_PAGE<=position)
+				   return null;
+				  switch (position){ 
+				  case 0:
+					  cur_fragment=new Menu_1();
+					  break;
+				  case 1:
+					  cur_fragment=new Menu_2();
+					  break;
+				  }
+				  return cur_fragment;
+		}
+	*/
+		@Override
+		public int getCount() {
+			return MAX_PAGE;  // 총 5개의 page를 보여줍니다.
+		}
+		@Override
+		public Object instantiateItem(View pager,int position){
+			View v = null;
+			if(position==0){
+				v=mInflater.inflate(R.layout.viewpager,null);
+				v.findViewById(R.id.user_update_button).setOnClickListener(mButtonClick);
+				v.findViewById(R.id.card_info_button).setOnClickListener(mButtonClick);
+				v.findViewById(R.id.notice_button).setOnClickListener(mButtonClick);
+				v.findViewById(R.id.qna_button).setOnClickListener(mButtonClick);
+			}else if(position==1){
+				v=mInflater.inflate(R.layout.veiwpager2,null);
+				v.findViewById(R.id.pay_button).setOnClickListener(mButtonClick);
+				v.findViewById(R.id.pay_list_button).setOnClickListener(mButtonClick);
+				v.findViewById(R.id.recent_list_button).setOnClickListener(mButtonClick);
+				v.findViewById(R.id.month_list_button).setOnClickListener(mButtonClick);
+			}
+			((ViewPager)pager).addView(v,0);
+			return v;
+		}
 
+		@Override
+		public boolean isViewFromObject(View v, Object obj) {
+			// TODO Auto-generated method stub
+			return v == obj;
+		}
+
+	}
+    private OnClickListener mButtonClick = new OnClickListener(){
+    	public void onClick(View v){
+    		switch(v.getId()){
+    		case R.id.user_update_button:
+    			intent = new Intent(MenuActivity.this,InfoModify.class);
+    			break;
+    		case R.id.card_info_button:
+    			intent = new Intent(MenuActivity.this,CardModify.class);
+    			break;
+    		case R.id.notice_button:
+    			intent = new Intent(MenuActivity.this,Notice.class);
+    			break;
+    		case R.id.qna_button:
+    			intent = new Intent(MenuActivity.this,CardModify.class);
+    			break;
+    		case R.id.pay_button:
+    			intent = new Intent(MenuActivity.this,PayActivity.class);
+    			break;
+    		case R.id.pay_list_button:
+    			intent = new Intent(MenuActivity.this,PayUse.class);
+    			break;
+    		case R.id.recent_list_button:
+    			intent = new Intent(MenuActivity.this,RecentUse.class);
+    			break;
+    		case R.id.month_list_button:
+    			intent = new Intent(MenuActivity.this,MonthUse.class);
+    			break;
+    		}
+    		startActivity(intent);
+    	}
+    };
+    
 }

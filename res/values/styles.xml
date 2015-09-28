@@ -18,9 +18,9 @@
          <item name="android:actionBarStyle">@style/MyActionBar</item>
     </style>
 	
-    <style name="MyActionBar" parent="android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+    <style name="MyActionBar" theme="@android:style/Theme.Light.NoTitleBar">
 
-        <item name="android:background">#B3E5FC</item>
+        <item name="android:background">#f5f5f5</item>
     </style>
 
 </resources>

@@ -1,26 +1,47 @@
 <LinearLayout android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" 
-    android:background="#E1F5FE" xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="20px"
-        android:textSize="50px"
-        android:text="회원가입" />
+    android:background="#ffffff" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/mdiv_list"
+                android:layout_width="fill_parent"
+                android:layout_height="66dp"
+                android:background="#64B5F6"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="회  원  가  입"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ffffff" />
+
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
-            android:layout_marginTop="10px"
-            android:text="회원 번호"/>
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:text="회원 번호" />
 
         <EditText
             android:id="@+id/UserNum"
@@ -36,14 +57,15 @@
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
-            android:layout_marginTop="5px"
-            android:text="이름" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="26dp"
+            android:text="이    름" />
 
         <EditText
             android:id="@+id/UserName"
@@ -52,7 +74,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
-            android:layout_weight="1"
+            android:layout_weight="0.39"
             android:background="@drawable/round"
             android:hint="영어이름을 써주세요"
             android:imeOptions="actionNext"
@@ -62,13 +84,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
-            android:layout_marginTop="5px"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="19dp"
             android:text="비밀번호" />
 
         <EditText
@@ -78,7 +101,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
-            android:layout_weight="1"
+            android:layout_weight="0.60"
             android:background="@drawable/round"
             android:imeOptions="actionNext"
             android:inputType="text" />
@@ -87,28 +110,27 @@
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
-            android:layout_marginTop="5px"
-            android:text="생년월일" 
-            />
+            android:layout_marginLeft="10dp"
+            android:text="생년월일" />
 
     </LinearLayout>
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
 
         <EditText
             android:id="@+id/UserBirthYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5px"
-            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
             android:background="@drawable/round"
             android:hint="ex)1990"
             android:imeOptions="actionNext"
@@ -117,16 +139,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
-            android:layout_marginTop="5px"
+            android:layout_marginTop="5dp"
             android:text=" 년" />
 
         <EditText
             android:id="@+id/UserBirthMonth"
-            android:layout_width="wrap_content"
+            android:layout_width="67dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5px"
-            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.06"
             android:background="@drawable/round"
             android:hint="ex)01~12"
             android:imeOptions="actionNext"
@@ -135,16 +156,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
-            android:layout_marginTop="5px"
+            android:layout_marginTop="5dp"
             android:text=" 월" />
 
         <EditText
             android:id="@+id/UserBirthDay"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
-            android:layout_weight="1"
+            android:layout_weight="0.02"
             android:background="@drawable/round"
             android:hint="ex)01~31"
             android:imeOptions="actionNext"
@@ -153,21 +173,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
-            android:layout_marginTop="5px"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
             android:text=" 일" />
         
     </LinearLayout>
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
-            android:layout_marginTop="5px"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="4dp"
             android:text="핸드폰 번호" />
 
         <EditText
@@ -187,14 +208,15 @@
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
-            android:layout_marginTop="5px"
-            android:text="이메일" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="21dp"
+            android:text="이 메 일" />
 
         <EditText
             android:id="@+id/UserEmail"
@@ -203,7 +225,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
-            android:layout_weight="1"
+            android:layout_weight="0.75"
             android:background="@drawable/round"
             android:imeOptions="actionNext"
             android:inputType="text" />
@@ -212,14 +234,15 @@
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
-            android:layout_marginTop="5px"
-            android:text="카드번호" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="6dp"
+            android:text="카드번호    " />
 
         <EditText
             android:id="@+id/UserCardNum"
@@ -228,7 +251,6 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
-            android:layout_weight="1"
             android:background="@drawable/round"
             android:hint="모든 숫자를 이어서 입력하세요"
             android:imeOptions="actionNext"
@@ -238,14 +260,15 @@
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
-            android:layout_marginTop="5px"
-            android:text="카드 유효기간" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="6dp"
+            android:text="유효기간    " />
 
         <EditText
             android:id="@+id/UserCardExp"
@@ -265,16 +288,19 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" >
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp" >
 
         <Button
             android:id="@+id/JoinBtn"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="140dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginTop="10px"
-            android:background="@drawable/joinus"
-            android:textSize="40px" />
+            android:background="@drawable/button_background"
+            android:text="가  입  하  기"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
         
     </LinearLayout>
     

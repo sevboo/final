@@ -318,7 +318,7 @@ public class BackgroundRangingService extends Service implements
 						Intent intent = new Intent(this, BackgroundMonitoringService.class);
 						intent.putExtra("major", mRangingAdapter.mRangedBeacons.get(i).getMajor());
 						startService(intent);
-					}else{
+					}else if (result_arr1[2].equals("2")){
 						this.popupNotification("환승 정보","시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]+"\n위치:"+lati+","+longi);
 						Intent intent = new Intent(this, BackgroundMonitoringService.class);
 						intent.putExtra("major", mRangingAdapter.mRangedBeacons.get(i).getMajor());

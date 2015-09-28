@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E1F5FE"
-    android:orientation="vertical" >
+    android:background="#ffffff"
+    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/mdiv_list"
+                android:layout_width="fill_parent"
+                android:layout_height="66dp"
+                android:background="#64B5F6"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="결 제 하 기"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ffffff" />
+
+        </FrameLayout>
+    </LinearLayout>
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -13,14 +40,15 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
             android:layout_weight="8"
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/textView2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="#ccffff"
+                android:background="#B7E4FB"
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="실시간 요금 조회" />
@@ -29,7 +57,7 @@
                 android:id="@+id/view_payuse"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:background="#cccc99"
+                android:background="#B7E4FB"
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="요금"
@@ -41,14 +69,16 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.91"
-            android:text="결제" />
+            android:background="@drawable/button_background"
+            android:text="결  제"
+            android:textColor="#ffffff" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:padding="10dp" >
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:id="@+id/pay_div_list"
