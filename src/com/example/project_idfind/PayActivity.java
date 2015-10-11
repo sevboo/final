@@ -42,12 +42,12 @@ public class PayActivity extends ActionBarActivity {
 		setContentView(R.layout.pay);
 		
 		//ArrayList<use_info> use_list = new ArrayList<use_info>();
-		PayUseAdapter PayUseAdapter = new PayUseAdapter(this);
+		PayActivityAdapter PayActivityAdapter = new PayActivityAdapter(this);
 		pay_info temp_use = null;
 		ListView pay_listview = (ListView)findViewById(R.id.pay_use);
 		TextView view_payuse = (TextView)findViewById(R.id.view_payuse);
 		Button payActivityBtn = (Button) findViewById(R.id.payActivityBtn);
-		pay_listview.setAdapter(PayUseAdapter);	
+		pay_listview.setAdapter(PayActivityAdapter);	
 		
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
 		// 스레드 가능
@@ -78,7 +78,7 @@ public class PayActivity extends ActionBarActivity {
 				temp_use = new pay_info("환승",recentInfo[i][1],recentInfo[i][2]);
 			}
 			
-			PayUseAdapter.pay_list.add(temp_use);
+			PayActivityAdapter.pay_list.add(temp_use);
 		}
 		
 		
@@ -193,7 +193,7 @@ public class PayActivity extends ActionBarActivity {
 
 			// buffer:php로 보낼 구문
 			StringBuffer buffer = new StringBuffer();
-			buffer.append("mem_id=" + mem_id);
+			buffer.append("mem_id=" + mem_id+ "&non_pay_sum=" + non_pay_sum);
 			// php로 보내기
 
 			PrintWriter writer = new PrintWriter(new OutputStreamWriter(

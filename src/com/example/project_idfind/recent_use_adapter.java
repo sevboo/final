@@ -23,11 +23,11 @@ public class recent_use_adapter extends BaseAdapter {
 		mLayoutInflater = LayoutInflater.from(context);
 	}	
 	@Override
-	public int getCount() {
+	public int getCount() {                
 		// TODO Auto-generated method stub
 		return use_list.size();
 	}
-
+             
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
