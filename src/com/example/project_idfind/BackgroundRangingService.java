@@ -59,8 +59,8 @@ public class BackgroundRangingService extends Service implements
 	String now_time,now_time2;
 
 	private long mScanDuration = 1000L;
-	private long mSleepDuration = (1 / 4) * 1000L;
-	private long mRegionExpirationTime = 3 * 1000L;
+	private long mSleepDuration = 1000L;//(1 / 4) * 1000L;
+	private long mRegionExpirationTime = 1000L;//3 * 1000L;
 	private int mNotificationID = 9999;
 	private RECOBeaconManager mRecoManager;
 	private ArrayList<RECOBeaconRegion> mRegions;
@@ -69,7 +69,7 @@ public class BackgroundRangingService extends Service implements
 	String lati;
 	String longi;
 	
-	int count = 0;
+	int count =0;
 	String major;
 	Boolean detection;
 	ArrayList<String> result_array = new ArrayList<String>();
@@ -288,7 +288,7 @@ public class BackgroundRangingService extends Service implements
 					"didRangeBeaconsInRegion() major- "
 							+ mRangingAdapter.mRangedBeacons.get(0).getMajor());
 			try{
-			if (mRangingAdapter.mRangedBeacons.get(i).getRssi() >= -70) {
+			if (mRangingAdapter.mRangedBeacons.get(i).getRssi() >= -65) {
 				count++;
 				
 				if (count == 1) {
@@ -301,15 +301,16 @@ public class BackgroundRangingService extends Service implements
 	                longi = String.valueOf(gps.getLongitude()); //경도
 	                
 					InputData();
-					
+					Log.i("RECOBackgroundRangingService","a");
 					StringTokenizer tokened1 = new StringTokenizer(result1,",");
 					int numberOfToken1 = tokened1.countTokens();
 					
 					for(int j=0;j<numberOfToken1;j++){
+						Log.i("RECOBackgroundRangingService","b");
 						result_arr1[j]=tokened1.nextToken();
 					}
 					//Toast.makeText(getApplicationContext(), "result:"+(Integer.parseInt(result_arr1[2])==0),Toast.LENGTH_LONG).show();
-					Log.i("RECOBackgroundRangingService","result:"+result_arr1[2]+"ok?"+result_arr1[2].equals("0")+"/"+result_arr1[2].equals("1"));
+					//Log.i("RECOBackgroundRangingService","result:"+result_arr1[2]+"ok?"+result_arr1[2].equals("0")+"/"+result_arr1[2].equals("1"));
 					if(result_arr1[2].equals("0")){
 						this.popupNotification("하차 정보","시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]+"\n위치:"+lati+","+longi);
 						//this.getMessage("하차 정보", "시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]);
@@ -324,7 +325,7 @@ public class BackgroundRangingService extends Service implements
 						intent.putExtra("major", mRangingAdapter.mRangedBeacons.get(i).getMajor());
 						startService(intent);
 					}
-					count=0;
+					
 				}else{
 					stopRangingWithRegion(region);
 				}

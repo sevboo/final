@@ -398,22 +398,7 @@ public class MenuActivity extends FragmentActivity {
 			mInflater=LayoutInflater.from(c);
 			// TODO Auto-generated constructor stub
 		}
-		/*
-		@Override
-		public Fragment getItem(int position) {
-			if(position<0 || MAX_PAGE<=position)
-				   return null;
-				  switch (position){ 
-				  case 0:
-					  cur_fragment=new Menu_1();
-					  break;
-				  case 1:
-					  cur_fragment=new Menu_2();
-					  break;
-				  }
-				  return cur_fragment;
-		}
-	*/
+
 		@Override
 		public int getCount() {
 			return MAX_PAGE;  // 총 5개의 page를 보여줍니다.
