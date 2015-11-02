@@ -5,7 +5,7 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry kind="lib" path="D:/reco_sdk_android_v0.2.3/sdk/reco-sdk-android_0.2.3.jar"/>
-	<classpathentry kind="lib" path="D:/reco_sdk_android_v0.2.3/sdk/reco-sdk-android_0.2.3_JavaDoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/현화/Desktop/reco_sdk_android_v0.2.3/reco_sdk_android_v0.2.3/sdk/reco-sdk-android_0.2.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/현화/Desktop/reco_sdk_android_v0.2.3/reco_sdk_android_v0.2.3/sdk/reco-sdk-android_0.2.3_JavaDoc.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

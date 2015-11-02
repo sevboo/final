@@ -1,7 +1,8 @@
 <LinearLayout android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" 
-    android:background="#ffffff" xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="#F6F6F6" 
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -131,6 +132,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_weight="0.07"
             android:background="@drawable/round"
             android:hint="ex)1990"
             android:imeOptions="actionNext"
@@ -251,6 +253,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
+            android:layout_weight="1"
             android:background="@drawable/round"
             android:hint="모든 숫자를 이어서 입력하세요"
             android:imeOptions="actionNext"
@@ -279,7 +282,7 @@
             android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:background="@drawable/round"
-            android:hint="ex)월일 이어서 입력하세요"
+            android:hint="월일 이어서 입력하세요"
             android:imeOptions="actionDone"
             android:inputType="text" />
 

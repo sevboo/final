@@ -8,6 +8,8 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
 import javax.net.ssl.HostnameVerifier;
@@ -17,10 +19,14 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.os.SystemClock;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
@@ -84,6 +90,7 @@ public class MainActivity extends FragmentActivity {
     	.penaltyLog()
     	.build());
 		
+		alarm_on();
 		
 		btnLogin.setOnClickListener(new OnClickListener() {
 			@Override
@@ -347,5 +354,40 @@ public class MainActivity extends FragmentActivity {
 			final Intent intent = new Intent(this, PopupActivity.class);
 			startActivity(intent);
 		}*/
+	}
+	
+	public void alarm_on(){
+		Log.i("MainActivity", "alarm_on()");
+		
+		AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+		Intent intent = new Intent(MainActivity.this,AlarmReceive.class);
+		PendingIntent sender = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+		Calendar calendar = Calendar.getInstance();
+		int currentYear=calendar.get(Calendar.YEAR);
+		int currentMonth=calendar.get(Calendar.MONTH);
+		int currentDate=calendar.get(Calendar.DATE);
+		
+		calendar.set(currentYear, currentMonth, 25, 12, 00 , 00);
+		
+		if (currentMonth == Calendar.JANUARY || currentMonth == Calendar.MARCH || currentMonth == Calendar.MAY || currentMonth == Calendar.JULY 
+	            || currentMonth == Calendar.AUGUST || currentMonth == Calendar.OCTOBER || currentMonth == Calendar.DECEMBER){
+			am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 31, sender);
+	    }
+	    if (currentMonth == Calendar.APRIL || currentMonth == Calendar.JUNE || currentMonth == Calendar.SEPTEMBER 
+	            || currentMonth == Calendar.NOVEMBER){
+	    	Log.i("MainActivity","setRepeating");
+	    	am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 30, sender);
+	        }
+
+
+	    if  (currentMonth == Calendar.FEBRUARY){
+	        GregorianCalendar cal = (GregorianCalendar) GregorianCalendar.getInstance();    
+	            if(cal.isLeapYear(currentYear)){
+	            	am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 29, sender);
+	            }
+	            else{ 
+	            	am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 28, sender);
+	            }
+	    }
 	}
 }

@@ -312,15 +312,15 @@ public class BackgroundRangingService extends Service implements
 					//Toast.makeText(getApplicationContext(), "result:"+(Integer.parseInt(result_arr1[2])==0),Toast.LENGTH_LONG).show();
 					//Log.i("RECOBackgroundRangingService","result:"+result_arr1[2]+"ok?"+result_arr1[2].equals("0")+"/"+result_arr1[2].equals("1"));
 					if(result_arr1[2].equals("0")){
-						this.popupNotification("하차 정보","시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]+"\n위치:"+lati+","+longi);
+						this.popupNotification("하차 정보","시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]+"원");//+"\n위치:"+lati+","+longi);
 						//this.getMessage("하차 정보", "시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]);
 					}else if (result_arr1[2].equals("1")){
-						this.popupNotification("승차 정보","시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]+"\n위치:"+lati+","+longi);
+						this.popupNotification("승차 정보","시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]+"원");//+"\n위치:"+lati+","+longi);
 						Intent intent = new Intent(this, BackgroundMonitoringService.class);
 						intent.putExtra("major", mRangingAdapter.mRangedBeacons.get(i).getMajor());
 						startService(intent);
 					}else if (result_arr1[2].equals("2")){
-						this.popupNotification("환승 정보","시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]+"\n위치:"+lati+","+longi);
+						this.popupNotification("환승 정보","시간:"+now_time2+"\n이용:"+result_arr1[1]+"\n요금:"+result_arr1[3]+"원");//+"\n위치:"+lati+","+longi);
 						Intent intent = new Intent(this, BackgroundMonitoringService.class);
 						intent.putExtra("major", mRangingAdapter.mRangedBeacons.get(i).getMajor());
 						startService(intent);

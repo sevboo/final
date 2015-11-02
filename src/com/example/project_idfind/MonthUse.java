@@ -84,8 +84,7 @@ public class MonthUse extends ActionBarActivity {
 
 				//tableLayout.setVisibility(android.view.View.INVISIBLE);
 
-				Toast.makeText(MonthUse.this, "선택된 년도 : " + selectYear,
-						Toast.LENGTH_LONG).show();
+				//Toast.makeText(MonthUse.this, "선택된 년도 : " + selectYear,Toast.LENGTH_LONG).show();
 			}
 
 			@Override
@@ -111,8 +110,7 @@ public class MonthUse extends ActionBarActivity {
 		
 		HttpPostData(); // 웹서버 연결 메소드
 
-		Toast.makeText(MonthUse.this, "RESULT :" + result_Sum,
-					Toast.LENGTH_LONG).show();
+		//Toast.makeText(MonthUse.this, "RESULT :" + result_Sum,Toast.LENGTH_LONG).show();
 
 		StringTokenizer tokened = new StringTokenizer(result_Sum, ",");
 		int numberOfToken = tokened.countTokens();

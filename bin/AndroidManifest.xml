@@ -23,7 +23,7 @@
          >
         <activity
             android:name=".MainActivity"
-            android:label="Beaconi" >
+            android:label="PASSnPAY" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,6 +35,7 @@
         <service android:name="com.example.project_idfind.BackgroundRangingService"/>
         
         <service android:name="com.perples.recosdk.RECOBeaconService" />
+        <receiver android:name="AlarmReceive" android:process=":remote" />
         
         <activity android:name="MenuActivity"></activity>
         <activity android:name="JoinActivity"></activity>
